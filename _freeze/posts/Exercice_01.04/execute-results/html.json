@@ -1,0 +1,14 @@
+{
+  "hash": "c82224813e246f649cb1093833b44ff5",
+  "result": {
+    "markdown": "---\ntitle: \"Exercice 4\"\nauthor: \"Authors.s\"\ndate: \"2025-04-xx\"\ndate-modified: \"2025-04-06\"\nformat: \n  html:\n    embed-resources: false\n    toc: true\n    code-fold: true\n    code-summary: \"Show the code\"\n    code-tools: true\n    toc-location: right\n    page-layout: article\n    code-overflow: wrap\ntoc: true\nnumber-sections: false\neditor: visual\ncategories: [\"categorie 1\", \"cotegorie 2\"]\nimage: \"\"\ndescription: \"Description\"\n---\n\n\n# Intervenant.e.s\n\n### Rédaction\n\n-   **Clément Poupelin**, [clementjc.poupelin\\@gmail.com](mailto:clementjc.poupelin@gmail.com){.email}\\\n\n### Relecture\n\n-   \n\n# Setup\n\n:::: panel-tabset\n## Packages\n\n\n::: {.cell}\n\n:::\n\n\n## Fonctions\n\n::: panel-tabset\n### Fonction 1\n\n### Fonction 2\n:::\n\n## Seed\n::::\n\n# Données\n\n\nOn va illustrer par des simulations les propriétés des estimateurs des coefficients de la régression simple\npar la méthode MCO et par la méthode inverse.\n\n\nPartie 1 : On considère deux échantillons de n variables (X1, . . . , Xn) et (Y1, . . . , Yn). On suppose que les\n(X1, . . . , Xn) sont connus.\nOn considère le modèle de régression simple\n\n\nYi = β0 + β1Xi + εi\n\noù les εi sont i.i.d de moyenne nulle, non corrélées et de variance σ\n2\n.\n\n\n\n\n# Analyse\n\n::: callout-note\nMETTRE LES REMARQUES\n:::\n\n::: callout-warning\nMETTRE LES POINTS D'ATTENTION\n:::\n\n:::: success-header\n::: success-icon\n:::\n\nRésultats\n::::\n\n::: success\nMETTRE LES CONCLUSIONS\n:::\n\n# Conclusion\n\n# Session info\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# sessioninfo::session_info(pkgs = \"attached\")\n```\n:::\n\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

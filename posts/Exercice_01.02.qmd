@@ -1,0 +1,293 @@
+---
+title: "Exercice 2"
+author: "Clément Poupelin"
+date: "2025-04-xx"
+date-modified: "`r Sys.Date()`"
+format: 
+  html:
+    embed-resources: false
+    toc: true
+    code-fold: true
+    code-summary: "Show the code"
+    code-tools: true
+    toc-location: right
+    page-layout: article
+    code-overflow: wrap
+toc: true
+number-sections: false
+editor: visual
+categories: ["categorie 1", "cotegorie 2"]
+image: ""
+description: "Description"
+---
+
+# Intervenant.e.s
+
+### Rédaction
+
+-   **Clément Poupelin**, [clementjc.poupelin\@gmail.com](mailto:clementjc.poupelin@gmail.com){.email}\
+
+### Relecture
+
+-   
+
+# Setup
+
+:::: panel-tabset
+## Packages
+
+```{r, setup, warning=FALSE, message=FALSE}
+
+```
+
+## Fonctions
+
+::: panel-tabset
+### Fonction 1
+
+### Fonction 2
+:::
+
+## Seed
+::::
+
+# Données
+
+| Table de données |
+|:---------:|:-----:|:------:|:------:|:------:|:------:|:------:|:------:| 
+| $x$ | 1000 | 800 | 600 | 450 | 300 | 200 | 100 |
+| $y$ | 573 | 534 | 495 | 451 | 395 | 337 | 253 |
+
+
+
+Représenter sur deux graphiques différents y en fonction de x et les rangs de y en fonction des
+rangs de x. Commenter.
+
+```{r}
+library(ggplot2)
+
+#### Graphe de y en fonction de x 
+
+# x = c(1000, 800, 600, 450, 300, 200, 100)
+# y = c(573, 534, 495, 451, 395, 337, 253)
+
+
+d <- data.frame(x = c(1000, 800, 600, 450, 300, 200, 100),
+                y = c(573, 534, 495, 451, 395, 337, 253))
+
+
+ggplot(d) +
+  aes(x = x, y = y) +
+  geom_point(colour = "red") +
+  xlab("x values") +
+  ylab("y values")
+
+
+
+#### Graphe des rangs y en fonction des rangs x
+# 
+# xtilde = rank(x)
+# ytilde = rank(y)
+
+d2 <- data.frame(xtilde = rank(d$x),
+                   ytilde = rank(d$y))
+
+ggplot(d2) +
+  aes(x = d2[,1], y = d2[,2]) +
+  geom_point(colour = "red") +
+  xlab("Rank(x) values") +
+  ylab("Rank(y) values")
+```
+
+
+Écrire des fonction R permettant de calculer le coefficient de Bravais-Pearson et celui de Spearman.
+Calculer leur valeur sur les données considérées.
+
+
+```{r}
+#### Création de fct pour les différentes corrélation 
+
+S = function(x, y){
+  sum((x - mean(x)) * (y - mean(y)))
+}
+
+## Correlation Bravais-Pearson
+CorBP = function(x, y){
+  S(x, y) / sqrt( S(x, x) * S(y, y) )
+  
+}
+
+## Correlation Spearman
+CorS = function(x, y){
+  CorBP(rank(x), rank(y))
+}
+
+#### On peut comparer avec la fonction cor() déjà sur r
+
+CorS(d$x, d$y) 
+cor(d$x, d$y, method="spearman")
+#> CorS(x, y) 
+#[1] 1
+#> cor(x, y, method="spearman")
+#[1] 1
+
+
+CorBP(d$x, d$y) 
+cor(d$x, d$y, method="pearson")
+#> CorBP(x, y) 
+#[1] 0.9624807
+#> cor(x, y, method="pearson")
+#[1] 0.9624807
+
+
+
+# verif ok 
+```
+
+Cet exemple permet d’illustrer une différence entre les deux coefficients précédents, laquelle ?
+Commenter.
+
+Maintenant, au vu de l'alignement des points sur le graphes des rank, être proche  de 1 semble normal
+
+Le coeff de Spearman va regarder la monotonie (avec le rank) entre x et y et ici c'est monotone 
+
+On a une relation déterministe entre x et y. On peut donc écrire y = f(x)
+
+
+
+
+# Analyse
+
+::: callout-note
+METTRE LES REMARQUES
+:::
+
+::: callout-warning
+METTRE LES POINTS D'ATTENTION
+:::
+
+:::: success-header
+::: success-icon
+:::
+
+Résultats
+::::
+
+::: success
+METTRE LES CONCLUSIONS
+:::
+
+# Conclusion
+
+# Session info
+
+```{r}
+sessioninfo::session_info(pkgs = "attached")
+```
+
+```{r, include=FALSE}
+
+######################### Exercice 2 ###########################################
+################################################################################
+
+
+########### Question 1) ##############
+
+library(ggplot2)
+
+#### Graphe de y en fonction de x 
+
+x = c(1000, 800, 600, 450, 300, 200, 100)
+y = c(573, 534, 495, 451, 395, 337, 253)
+
+
+d = as.data.frame(cbind(x,y))
+
+
+ggplot(d) +
+  aes(x = d[,1], y = d[,2]) +
+  geom_point(colour = "red") +
+  xlab("x values") +
+  ylab("y values")
+
+
+
+#### Graphe des rangs y en fonction des rangs x
+
+xtilde = rank(x)
+ytilde = rank(y)
+
+d2 = as.data.frame(cbind(xtilde, ytilde))
+
+ggplot(d2) +
+  aes(x = d2[,1], y = d2[,2]) +
+  geom_point(colour = "red") +
+  xlab("Rank(x) values") +
+  ylab("Rank(y) values")
+
+
+
+
+########### Question 2) ##############
+
+#### Création de fct pour les différentes corrélation 
+
+S = function(x, y){
+  sum((x - mean(x)) * (y - mean(y)))
+}
+
+## Correlation Bravais-Pearson
+CorBP = function(x, y){
+  S(x, y) / sqrt( S(x, x) * S(y, y) )
+  
+}
+
+## Correlation Spearman
+CorS = function(x, y){
+  CorBP(rank(x), rank(y))
+}
+
+#### On peut comparer avec la fonction cor() déjà sur r
+
+CorS(x, y) 
+cor(x, y, method="spearman")
+#> CorS(x, y) 
+#[1] 1
+#> cor(x, y, method="spearman")
+#[1] 1
+
+
+CorBP(x, y) 
+cor(x, y, method="pearson")
+#> CorBP(x, y) 
+#[1] 0.9624807
+#> cor(x, y, method="pearson")
+#[1] 0.9624807
+
+
+
+# verif ok 
+
+
+
+########### Question 3) ##############
+
+
+# Maintenant, au vu de l'alignement des points sur le graphes des rank, être proche  de 1 semble normal
+
+# Le coeff de Spearman va regarder la monotonie (avec le rank) entre x et y et ici c'est monotone 
+
+# On a une relation déterministe entre x et y. On peut donc écrire y = f(x)
+
+
+
+
+
+
+
+
+
+
+
+
+```

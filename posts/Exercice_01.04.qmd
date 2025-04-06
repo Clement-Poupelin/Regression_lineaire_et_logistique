@@ -1,0 +1,466 @@
+---
+title: "Exercice 4"
+author: "Authors.s"
+date: "2025-04-xx"
+date-modified: "`r Sys.Date()`"
+format: 
+  html:
+    embed-resources: false
+    toc: true
+    code-fold: true
+    code-summary: "Show the code"
+    code-tools: true
+    toc-location: right
+    page-layout: article
+    code-overflow: wrap
+toc: true
+number-sections: false
+editor: visual
+categories: ["categorie 1", "cotegorie 2"]
+image: ""
+description: "Description"
+---
+
+# Intervenant.e.s
+
+### Rédaction
+
+-   **Clément Poupelin**, [clementjc.poupelin\@gmail.com](mailto:clementjc.poupelin@gmail.com){.email}\
+
+### Relecture
+
+-   
+
+# Setup
+
+:::: panel-tabset
+## Packages
+
+```{r, setup, warning=FALSE, message=FALSE}
+
+```
+
+## Fonctions
+
+::: panel-tabset
+### Fonction 1
+
+### Fonction 2
+:::
+
+## Seed
+::::
+
+# Données
+
+
+On va illustrer par des simulations les propriétés des estimateurs des coefficients de la régression simple
+par la méthode MCO et par la méthode inverse.
+
+
+Partie 1 : On considère deux échantillons de n variables (X1, . . . , Xn) et (Y1, . . . , Yn). On suppose que les
+(X1, . . . , Xn) sont connus.
+On considère le modèle de régression simple
+
+
+Yi = β0 + β1Xi + εi
+
+où les εi sont i.i.d de moyenne nulle, non corrélées et de variance σ
+2
+.
+
+
+
+
+# Analyse
+
+::: callout-note
+METTRE LES REMARQUES
+:::
+
+::: callout-warning
+METTRE LES POINTS D'ATTENTION
+:::
+
+:::: success-header
+::: success-icon
+:::
+
+Résultats
+::::
+
+::: success
+METTRE LES CONCLUSIONS
+:::
+
+# Conclusion
+
+# Session info
+
+```{r}
+# sessioninfo::session_info(pkgs = "attached")
+```
+
+
+```{r, include=FALSE, eval=FALSE}
+
+
+######################### Exercice 4 ###########################################
+################################################################################
+
+######################### Partie 1 ####
+#######################################
+
+########### Question 3) ##############
+
+beta1MCO = function( x, y ){
+  S(x,y)/S(x,x)
+}
+
+beta0MCO = function( x, y ){
+  mean(y) - beta1MCO(x, y) * mean(x)
+}
+
+
+########### Question 4) ##############
+
+beta1RI = function( x, y ){
+  S(y,y)/S(x,y)
+}
+
+beta0RI = function( x, y ){
+  mean(y) - beta1RI(x, y) * mean(x)
+}
+
+
+########### Question 5) ##############
+
+library(readr)
+data <- read_csv("1. Workspace/Master IS/M1/Régression linéaire et logistique/TD et TP/X.txt")
+View(data)
+
+beta1 = 2
+beta0 = 10
+
+
+# On créer une variable epsilon que l'on complète de 100 valeurs (taille de X)
+# qui sont des observation obtenue suivant une loi gaussienne (0, 1)
+data$epsilon <- rnorm(100, 0, 1)
+
+# on construit la variable des Yi
+data$Y = 10 + 2*data$x + data$epsilon
+
+
+# on fait nos estimateur MCO inverses
+beta1RI(data$x, 10 + 2*data$x + rnorm(100, 0, 1))
+
+beta0RI(as.numeric(data$x), as.numeric(10 + 2*data$x + rnorm(100, 0, 1)))
+#> beta1RI(as.numeric(data$x), as.numeric(data$Y))
+#[1] 2.500503
+#> beta0RI(as.numeric(data$x), as.numeric(data$Y))
+#[1] 9.892161
+
+
+beta1MCO(as.numeric(data$x), as.numeric(data$Y))
+
+beta0MCO(as.numeric(data$x), as.numeric(data$Y))
+#> beta1MCO(as.numeric(data$x), as.numeric(data$Y))
+#[1] 1.843383
+#> beta0MCO(as.numeric(data$x), as.numeric(data$Y))
+#[1] 9.89286
+
+
+
+## nos esimateurs sont pas loin des beta1 et beta0
+
+
+data$B1RI = 0
+data$B0RI = 0
+
+for (i in 1:10000){
+  data$B1RI[i] = beta1RI(data$x, 10 + 2*data$x + rnorm(100, 0, 1))
+  
+  data$B0RI[i] = beta0RI(as.numeric(data$x), as.numeric(10 + 2*data$x + rnorm(100, 0, 1)))
+  
+}
+
+
+data$B1MCO = 0
+data$B0MCO = 0
+
+for (i in 1:10000){
+  data$B1MCO[i] = beta1MCO(data$x, 10 + 2*data$x + rnorm(100, 0, 1))
+  
+  data$B0MCO[i] = beta0MCO(as.numeric(data$x), as.numeric(10 + 2*data$x + rnorm(100, 0, 1)))
+  
+}
+
+
+boxplot(data$B0RI, data$B0MCO,
+        main = "Estimation de Beta0 avec une erreur ~N(0,1)",
+        xlab = "xlab",
+        #ylab = "",
+        names = c("B0RI", "B0MCO"),
+        col = c("purple","pink"),
+        border = "brown",
+        horizontal = TRUE,
+        notch = TRUE) 
+abline(v = 10, col = 2)
+
+boxplot(data$B1RI, data$B1MCO,
+        main = "Estimation de Beta1 avec une erreur ~N(0,1)",
+        xlab = "xlab",
+        #ylab = "",
+        names = c("B1RI", "B1MCO"),
+        col = c("purple","pink"),
+        border = "brown",
+        horizontal = TRUE,
+        notch = TRUE)
+abline(v = 2, col = 2)
+
+
+########### Question 6) ##############
+
+data$B1RI2 = 0
+data$B0RI2 = 0
+
+for (i in 1:10000){
+  data$B1RI2[i] = beta1RI(data$x, 10 + 2*data$x + rnorm(100, 0, 16))
+  
+  data$B0RI2[i] = beta0RI(as.numeric(data$x), as.numeric(10 + 2*data$x + rnorm(100, 0, 16)))
+  
+}
+
+
+data$B1MCO2 = 0
+data$B0MCO2 = 0
+
+for (i in 1:10000){
+  data$B1MCO2[i] = beta1MCO(data$x, 10 + 2*data$x + rnorm(100, 0, 16))
+  
+  data$B0MCO2[i] = beta0MCO(as.numeric(data$x), as.numeric(10 + 2*data$x + rnorm(100, 0, 16)))
+  
+}
+
+
+boxplot(data$B0RI2, data$B0MCO2,
+        main = "Estimation de Beta0 avec une erreur ~N(0,16)",
+        xlab = "xlab",
+        #ylab = "",
+        names = c("B0RI", "B0MCO"),
+        col = c("purple","pink"),
+        border = "brown",
+        horizontal = TRUE,
+        notch = TRUE)
+
+
+boxplot(data$B1RI2, data$B1MCO2,
+        main = "Estimation de Beta1 avec une erreur ~N(0,16)",
+        xlab = "xlab",
+        #ylab = "",
+        names = c("B1RI", "B1MCO"),
+        col = c("purple","pink"),
+        border = "brown",
+        horizontal = TRUE,
+        notch = TRUE)
+
+########### Question 5) Corrigé ##############
+
+
+
+B = 10000
+n = length(data$x); n
+res = matrix(0, ncol=4, nrow=B)
+dim(res)
+
+for (b in 1:B){
+  eps = rnorm(n)
+  y = 10 + 2 * data$x + eps
+  res[b,] = c(beta1MCO(data$x, y), beta0MCO(data$x, y), beta1RI(data$x, y), beta0RI(data$x, y))
+
+}
+
+boxplot(res[,c(1,3)], 
+        main = 'Comparaison des pentes', 
+        names = c('MCO', 'RI'))
+abline(h = 2, col = 2)
+
+
+#### faire apparaitre biais et variance ####
+
+# calcul du biais 
+
+biaisbeta1MCO = mean(res[,1] - 2)
+variancebeta1MCO = (1/B) * sum((res[,1] - 2)**2)
+
+biaisbeta0MCO = (1/B) * sum(res[,2] - 2)
+variancebeta0MCO = (1/B) * sum((res[,2] - 2)**2)
+
+biaisbeta1RI = (1/B) * sum(res[,3] - 2)
+variancebeta1RI = (1/B) * sum((res[,3] - 2)**2)
+
+biaisbeta0RI = (1/B) * sum(res[,4] - 2)
+variancebeta0RI = (1/B) * sum((res[,4] - 2)**2)
+
+
+biaisbeta1MCO
+#[1] 0.0007703197
+
+variancebeta1MCO
+#[1] 0.01003526
+
+biaisbeta0MCO
+#[1] 7.999521
+
+variancebeta0MCO
+#[1] 64.00262
+
+biaisbeta1RI
+#[1] 0.4995708
+
+variancebeta1RI
+#[1] 0.2605581
+
+biaisbeta0RI
+#[1] 7.946902
+
+variancebeta0RI
+#[1] 63.16354
+
+
+#####
+
+
+boxplot(res[,c(2,4)],
+        main = "Estimation de Beta0 avec une erreur ~N(0,1)",
+        xlab = "xlab",
+        #ylab = "",
+        names = c("B0MCO", "B0RI"),
+        col = c("purple","pink"),
+        border = "brown",
+        horizontal = TRUE,
+        notch = TRUE) 
+abline(v = 10, col = 2)
+
+boxplot(res[,c(1,3)],
+        main = "Estimation de Beta1 avec une erreur ~N(0,1)",
+        xlab = "xlab",
+        #ylab = "",
+        names = c("B1MCO", "B1RI"),
+        col = c("purple","pink"),
+        border = "brown",
+        horizontal = TRUE,
+        notch = TRUE)
+abline(v = 2, col = 2)
+
+
+## On voit que c'est des estimateurs sans biais 
+
+
+########### Question 6) Corrigé ##############
+
+
+res2 = matrix(0, ncol=4, nrow=B)
+
+
+for (b in 1:B){
+  eps = rnorm(n, 0, 16)
+  y = 10 + 2 * data$x + eps
+  res2[b,] = c(beta1MCO(data$x, y), beta0MCO(data$x, y), beta1RI(data$x, y), beta0RI(data$x, y))
+}
+
+
+boxplot(res2[,c(2,4)],
+        main = "Estimation de Beta0 avec une erreur ~N(0,16)",
+        xlab = "xlab",
+        #ylab = "",
+        names = c("B0MCO", "B0RI"),
+        col = c("purple","pink"),
+        border = "brown",
+        horizontal = TRUE,
+        notch = TRUE) 
+abline(v = 10, col = 2)
+
+boxplot(res2[,c(1,3)],
+        main = "Estimation de Beta1 avec une erreur ~N(0,16)",
+        xlab = "xlab",
+        #ylab = "",
+        names = c("B1RI", "B1MCO"),
+        col = c("purple","pink"),
+        border = "brown",
+        horizontal = TRUE,
+        notch = TRUE)
+abline(v = 2, col = 2)
+
+
+
+
+
+
+
+
+######################### Partie 2 ####
+#######################################
+
+
+########### Question 1) ##############
+library(readr)
+ozone <- read_csv("1. Workspace/Master IS/M1/Régression linéaire et logistique/TD et TP/ozone.csv")
+View(ozone)
+library(ggplot2)
+ggplot(ozone) +
+  aes(x = ozone$T12, y = ozone$O3) +
+  geom_point(colour = 'purple') +
+  geom_smooth(formula = y~x, colour="red", method="lm") +
+  #geom_smooth(formula = x~y, method = "lm") +
+  ylab("Concentration en ozone") +
+  xlab("Température") +
+  ggtitle("Nuage de points du jeu de données Ozone")
+
+
+
+l = lm(ozone$O3~ozone$T12, data = ozone)
+l$coefficients
+summary(l)
+#l'intercept c'est beta0 estimé et 
+# l'autre valeur c'est la pente beta 1
+# on a donc beta1hat 2.7010
+#on sait que beta1hatRI = Syy / Sxy alors que beta1hatMCO = Sxy/Sxx
+
+lRI = lm(ozone$T12~ozone$O3, data = ozone) # on inverse les roles X et Y
+lRI$coefficients
+l2 = 1 / lRI$coefficients[2] 
+l2
+#9.67831 
+
+
+plot(ozone$O3, ozone$T12,
+     main = "titre",
+     sub = eq)
+abline(l, col="blue")
+abline(lRI, col="red")
+
+
+
+
+
+
+
+########### Corrigé ##############
+
+
+plot(x<-ozone$T12,y<-ozone$O3,pch=20,xlab="Température",
+     ylab="Ozone")
+abline(lm(y~x),col=2,lty=2,lwd=2)
+b2<-1/coef(lm(x~y))[2]
+a2<-mean(y)-b2*mean(x)
+abline(a=a2,b=b2,col=3,lty=3,lwd=2)
+points(mean(x), mean(y), pch=21, col=4) # affichage du point moyen
+legend("topleft",c("MCO","RI"),lty=2:3,col=2:3,cex=0.8)
+
+
+
+## les deux droites de regression passent par le point moyen 
+
+```
+
