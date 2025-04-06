@@ -4,8 +4,8 @@ project:
 
 
 website:
-  title: Nom du cours
-  site-url: https://github.com/Clement-Poupelin/Blog_template
+  title: Régression linéaire et logistique
+  site-url: https://clement-poupelin.github.io/Regression_lineaire_et_logistique/
   favicon: img/logo_univ_nantes_simple.png
   navbar:
     background: light
@@ -18,7 +18,7 @@ website:
         href: TP_StatGdeDim.pdf
         
     right:
-      - href: https://clement-poupelin.github.io/Blog_template/
+      - href: https://clement-poupelin.github.io/Regression_lineaire_et_logistique/
         text: Home
       - about.qmd
       - icon: github
