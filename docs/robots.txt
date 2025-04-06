@@ -1,1 +1,1 @@
-Sitemap: https://github.com/Clement-Poupelin/Blog_template/sitemap.xml
+Sitemap: https://clement-poupelin.github.io/Regression_lineaire_et_logistique/sitemap.xml

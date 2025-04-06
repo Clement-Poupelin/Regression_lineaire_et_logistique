@@ -14,8 +14,13 @@ website:
     logo-href: https://www.univ-nantes.fr/
     left:
       - icon: file-earmark-font-fill
-        text: Feuille de TP
-        href: TP_StatGdeDim.pdf
+        menu: 
+          - text: Feuille de TP 1
+            href: feuille1.pdf
+          - text: Feuille de TP 2
+            href: feuille2.pdf
+          - text: Feuille de TP 2
+            href: TP3.pdf
         
     right:
       - href: https://clement-poupelin.github.io/Regression_lineaire_et_logistique/
