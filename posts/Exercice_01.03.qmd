@@ -1,0 +1,78 @@
+---
+title: "Exercice 1.01"
+author: "Clément Poupelin"
+date: "2025-04-xx"
+date-modified: "`r Sys.Date()`"
+format: 
+  html:
+    embed-resources: false
+    toc: true
+    code-fold: true
+    code-summary: "Show the code"
+    code-tools: true
+    toc-location: right
+    page-layout: article
+    code-overflow: wrap
+toc: true
+number-sections: false
+editor: visual
+categories: ["Feuille 1", "Régression", "MCO"]
+image: "/img/analyse-de-regression.png"
+description: "Description"
+---
+
+# Intervenant.e.s
+
+### Rédaction
+
+-   **Clément Poupelin**, [clementjc.poupelin\@gmail.com](mailto:clementjc.poupelin@gmail.com){.email}\
+
+### Relecture
+
+-   
+
+# Exercice
+
+On souhaite exprimer la hauteur $y$ d’un arbre en fonction de son diamètre $x$ à 1m30 du sol. Pour cela,
+on a mesuré 20 couples diamètre-hauteur et les résultats ci-dessous sont disponibles :
+
+  - $\bar{x} = 34.9$
+
+  - $\bar{y} = 18.34$
+
+  - $\frac{1}{20}\sum_{i=1}^{20}(x_i - \bar{x})^2 = 28.29$
+
+  - $\frac{1}{20}\sum_{i=1}^{20}(y_i - \bar{y})^2 = 2.85$
+
+  - $\frac{1}{20}\sum_{i=1}^{20}(x_i - \bar{x})(y_i - \bar{y}) = 6.26$
+
+
+
+On note $\hat{y} = \beta_0 + \beta_1x$ l’estimation de la droite de régression par la méthode des moindres carrés
+ordinaires. Ainsi 
+
+  - $\beta_0$ 
+  
+  - $\beta_1$
+  
+  
+Ce qui nous permet d'effectuer les calculs suivants :
+
+::: panel-tabset 
+
+## Calcul $\beta_0$
+
+## Calcul $\beta_1$
+
+:::
+
+
+
+
+
+
+(2) Donner une mesure de qualité d’ajustement des données au modèle. Exprimer cette mesure à
+l’aide des statistiques élémentaires. Calculer et commenter.
+
+
+

@@ -16,9 +16,9 @@ format:
 toc: true
 number-sections: false
 editor: visual
-categories: ["categorie 1", "cotegorie 2"]
+categories: ["Feuille 1", "Régression", "MCO", "RI"]
 image: ""
-description: "Description"
+description: "Comparaison de la méthodes des moindres carrés ordinaires et la méthode inverse pour la régression simple"
 ---
 
 # Intervenant.e.s
@@ -38,6 +38,7 @@ description: "Description"
 
 ```{r, setup, warning=FALSE, message=FALSE}
 
+library(dplyr)        # manipulation des données
 ```
 
 ## Fonctions
@@ -72,6 +73,11 @@ beta0_RI <- function(x, y) {
 :::
 
 ## Seed
+
+```{r}
+set.seed(140400)
+```
+
 ::::
 
 # Données
@@ -93,39 +99,38 @@ On considère deux échantillons de $n$ variables $(X_1, . . . , X_n)$ et $(Y_1,
 $$Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i$$
 où les $\varepsilon_i$ sont i.i.d de moyenne nulle, non corrélées et de variance $\sigma^2$ .
 
+On va se baser sur des données présentes dans le fichier X.txt (mettre lien vers le github /Data). Le but sera de calculer les estimateurs précédents sur $B=100$ échantiloons de $(Y_i)_i$ définis par $Y_i = 10 + 2X_i + \varepsilon_i$, les $\varepsilon_i$ sont gaussiennes i.i.d de moyenne nulle, non corrélées et de variance $\sigma^2=1$.
 
 ```{r}
-library(readr)
-data <- readr::read_csv("../Data/X.txt")
+X_data <- readr::read_csv("../Data/X.txt")
 
-beta1 = 2
-beta0 = 10
+## Parameters
+B <- 100
 
+beta0 <- 10
+beta1 <- 2
 
-# On créer une variable epsilon que l'on complète de 100 valeurs (taille de X)
-# qui sont des observation obtenue suivant une loi gaussienne (0, 1)
-data$epsilon <- rnorm(100, 0, 1)
+X_data$epsilon <- rnorm(B, 0, 1)
 
-# on construit la variable des Yi
-data$Y = 10 + 2*data$x + data$epsilon
-
+## Model
+X_data$Y <- 10 + 2*X_data$x + X_data$epsilon
 ```
 
 
 ```{r}
 # on fait nos estimateur MCO inverses
-beta1_RI(data$x, 10 + 2*data$x + rnorm(100, 0, 1))
+# beta1_RI(X_data$x, 10 + 2*X_data$x + rnorm(100, 0, 1))
 
-beta0_RI(as.numeric(data$x), as.numeric(10 + 2*data$x + rnorm(100, 0, 1)))
+# beta0_RI(as.numeric(X_data$x), as.numeric(10 + 2*X_data$x + rnorm(100, 0, 1)))
 #> beta1RI(as.numeric(data$x), as.numeric(data$Y))
 #[1] 2.500503
 #> beta0RI(as.numeric(data$x), as.numeric(data$Y))
 #[1] 9.892161
 
 
-beta1_MCO(as.numeric(data$x), as.numeric(data$Y))
+# beta1_MCO(as.numeric(X_data$x), as.numeric(X_data$Y))
 
-beta0_MCO(as.numeric(data$x), as.numeric(data$Y))
+# beta0_MCO(as.numeric(X_data$x), as.numeric(X_data$Y))
 #> beta1MCO(as.numeric(data$x), as.numeric(data$Y))
 #[1] 1.843383
 #> beta0MCO(as.numeric(data$x), as.numeric(data$Y))
@@ -136,29 +141,53 @@ beta0_MCO(as.numeric(data$x), as.numeric(data$Y))
 ## nos esimateurs sont pas loin des beta1 et beta0
 
 
-data$B1RI = 0
-data$B0RI = 0
 
-for (i in 1:100){
-  data$B1RI[i] = beta1_RI(data$x, 10 + 2*data$x + rnorm(100, 0, 1))
+estim <- data.frame(
+  beta1_RI = beta1_RI(X_data$x, 10 + 2 * X_data$x + rnorm(B, 0, 1)),
+  beta0_RI = beta0_RI(as.numeric(X_data$x), as.numeric(10 + 2 * X_data$x + rnorm(100, 0, 1))),
+  beta1_MCO = beta1_MCO(as.numeric(X_data$x), as.numeric(X_data$Y)),
+  beta0_MCO = beta0_MCO(as.numeric(X_data$x), as.numeric(X_data$Y))
+) 
+estim %>% DT::datatable()
+```
+
+
+:::: success-header
+::: success-icon
+:::
+
+Résultats
+::::
+
+::: success
+On est très proche des résultats recherchées
+:::
+
+Tracons les boxplot des estimateurs obtenus (on tracera les vraies valeurs des paramètres).
+```{r}
+# X_data$B1RI = 0
+# X_data$B0RI = 0
+
+for (i in 1:B){
+  X_data$B1RI[i] <- beta1_RI(X_data$x, 10 + 2*X_data$x + rnorm(B, 0, 1))
   
-  data$B0RI[i] = beta0_RI(as.numeric(data$x), as.numeric(10 + 2*data$x + rnorm(100, 0, 1)))
+  X_data$B0RI[i] <- beta0_RI(as.numeric(X_data$x), as.numeric(10 + 2*X_data$x + rnorm(B, 0, 1)))
   
 }
 
 
-data$B1MCO = 0
-data$B0MCO = 0
+# X_data$B1MCO = 0
+# X_data$B0MCO = 0
 
-for (i in 1:100){
-  data$B1MCO[i] = beta1_MCO(data$x, 10 + 2*data$x + rnorm(100, 0, 1))
+for (i in 1:B){
+  X_data$B1MCO[i] <- beta1_MCO(X_data$x, 10 + 2*X_data$x + rnorm(B, 0, 1))
   
-  data$B0MCO[i] = beta0_MCO(as.numeric(data$x), as.numeric(10 + 2*data$x + rnorm(100, 0, 1)))
+  X_data$B0MCO[i] <- beta0_MCO(as.numeric(X_data$x), as.numeric(10 + 2*X_data$x + rnorm(B, 0, 1)))
   
 }
 
 
-boxplot(data$B0RI, data$B0MCO,
+boxplot(X_data$B0RI, X_data$B0MCO,
         main = "Estimation de Beta0 avec une erreur ~N(0,1)",
         xlab = "xlab",
         #ylab = "",
@@ -169,7 +198,7 @@ boxplot(data$B0RI, data$B0MCO,
         notch = TRUE) 
 abline(v = 10, col = 2)
 
-boxplot(data$B1RI, data$B1MCO,
+boxplot(X_data$B1RI, X_data$B1MCO,
         main = "Estimation de Beta1 avec une erreur ~N(0,1)",
         xlab = "xlab",
         #ylab = "",
@@ -183,29 +212,29 @@ abline(v = 2, col = 2)
 
 ########### Question 6) ##############
 
-data$B1RI2 = 0
-data$B0RI2 = 0
+X_data$B1RI2 = 0
+X_data$B0RI2 = 0
 
 for (i in 1:100){
-  data$B1RI2[i] = beta1_RI(data$x, 10 + 2*data$x + rnorm(100, 0, 16))
+  X_data$B1RI2[i] = beta1_RI(X_data$x, 10 + 2*X_data$x + rnorm(100, 0, 16))
   
-  data$B0RI2[i] = beta0_RI(as.numeric(data$x), as.numeric(10 + 2*data$x + rnorm(100, 0, 16)))
+  X_data$B0RI2[i] = beta0_RI(as.numeric(X_data$x), as.numeric(10 + 2*X_data$x + rnorm(100, 0, 16)))
   
 }
 
 
-data$B1MCO2 = 0
-data$B0MCO2 = 0
+X_data$B1MCO2 = 0
+X_data$B0MCO2 = 0
 
 for (i in 1:100){
-  data$B1MCO2[i] = beta1_MCO(data$x, 10 + 2*data$x + rnorm(100, 0, 16))
+  X_data$B1MCO2[i] = beta1_MCO(X_data$x, 10 + 2*X_data$x + rnorm(100, 0, 16))
   
-  data$B0MCO2[i] = beta0_MCO(as.numeric(data$x), as.numeric(10 + 2*data$x + rnorm(100, 0, 16)))
+  X_data$B0MCO2[i] = beta0_MCO(as.numeric(X_data$x), as.numeric(10 + 2*X_data$x + rnorm(100, 0, 16)))
   
 }
 
 
-boxplot(data$B0RI2, data$B0MCO2,
+boxplot(X_data$B0RI2, X_data$B0MCO2,
         main = "Estimation de Beta0 avec une erreur ~N(0,16)",
         xlab = "xlab",
         #ylab = "",
@@ -216,7 +245,7 @@ boxplot(data$B0RI2, data$B0MCO2,
         notch = TRUE)
 
 
-boxplot(data$B1RI2, data$B1MCO2,
+boxplot(X_data$B1RI2, X_data$B1MCO2,
         main = "Estimation de Beta1 avec une erreur ~N(0,16)",
         xlab = "xlab",
         #ylab = "",
@@ -231,14 +260,14 @@ boxplot(data$B1RI2, data$B1MCO2,
 
 
 B = 10000
-n = length(data$x); n
+n = length(X_data$x); n
 res = matrix(0, ncol=4, nrow=B)
 dim(res)
 
 for (b in 1:B){
   eps = rnorm(n)
-  y = 10 + 2 * data$x + eps
-  res[b,] = c(beta1_MCO(data$x, y), beta0_MCO(data$x, y), beta1_RI(data$x, y), beta0_RI(data$x, y))
+  y = 10 + 2 * X_data$x + eps
+  res[b,] = c(beta1_MCO(X_data$x, y), beta0_MCO(X_data$x, y), beta1_RI(X_data$x, y), beta0_RI(X_data$x, y))
 
 }
 
@@ -247,7 +276,10 @@ boxplot(res[,c(1,3)],
         names = c('MCO', 'RI'))
 abline(h = 2, col = 2)
 
+```
 
+Calcul du biais et de la variance.
+```{r}
 #### faire apparaitre biais et variance ####
 
 # calcul du biais 
@@ -327,8 +359,8 @@ res2 = matrix(0, ncol=4, nrow=B)
 
 for (b in 1:B){
   eps = rnorm(n, 0, 16)
-  y = 10 + 2 * data$x + eps
-  res2[b,] = c(beta1_MCO(data$x, y), beta0_MCO(data$x, y), beta1_RI(data$x, y), beta0_RI(data$x, y))
+  y = 10 + 2 * X_data$x + eps
+  res2[b,] = c(beta1_MCO(X_data$x, y), beta0_MCO(X_data$x, y), beta1_RI(X_data$x, y), beta0_RI(X_data$x, y))
 }
 
 

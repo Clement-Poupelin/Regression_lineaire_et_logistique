@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://clement-poupelin.github.io/Regression_lineaire_et_logistique/about.html</loc>
+    <lastmod>2025-04-06T16:04:17.159Z</lastmod>
+  </url>
+  <url>
     <loc>https://clement-poupelin.github.io/Regression_lineaire_et_logistique/posts/Exercice_Template.html</loc>
-    <lastmod>2025-04-06T15:33:37.247Z</lastmod>
+    <lastmod>2025-04-06T16:04:17.222Z</lastmod>
+  </url>
+  <url>
+    <loc>https://clement-poupelin.github.io/Regression_lineaire_et_logistique/posts/Exercice_01.04.html</loc>
+    <lastmod>2025-04-07T08:34:28.637Z</lastmod>
   </url>
   <url>
     <loc>https://clement-poupelin.github.io/Regression_lineaire_et_logistique/posts/Exercice_01.02.html</loc>
-    <lastmod>2025-04-06T15:33:33.204Z</lastmod>
+    <lastmod>2025-04-06T16:04:17.221Z</lastmod>
   </url>
   <url>
-    <loc>https://clement-poupelin.github.io/Regression_lineaire_et_logistique/about.html</loc>
-    <lastmod>2025-04-06T15:33:25.960Z</lastmod>
+    <loc>https://clement-poupelin.github.io/Regression_lineaire_et_logistique/posts/Exercice_01.01.html</loc>
+    <lastmod>2025-04-11T12:45:34.454Z</lastmod>
+  </url>
+  <url>
+    <loc>https://clement-poupelin.github.io/Regression_lineaire_et_logistique/posts/Exercice_01.03.html</loc>
+    <lastmod>2025-04-11T12:45:37.653Z</lastmod>
   </url>
   <url>
     <loc>https://clement-poupelin.github.io/Regression_lineaire_et_logistique/index.html</loc>
     <lastmod>2025-04-06T16:04:17.221Z</lastmod>
-  </url>
-  <url>
-    <loc>https://clement-poupelin.github.io/Regression_lineaire_et_logistique/posts/Exercice_01.04.html</loc>
-    <lastmod>2025-04-06T16:52:09.628Z</lastmod>
   </url>
 </urlset>

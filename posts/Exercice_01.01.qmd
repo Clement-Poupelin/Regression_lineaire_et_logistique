@@ -1,0 +1,186 @@
+---
+title: "Exercice 1.01"
+author: "Clément Poupelin"
+date: "2025-04-11"
+date-modified: "`r Sys.Date()`"
+format: 
+  html:
+    embed-resources: false
+    toc: true
+    code-fold: true
+    code-summary: "Show the code"
+    code-tools: true
+    toc-location: right
+    page-layout: article
+    code-overflow: wrap
+toc: true
+number-sections: false
+editor: visual
+categories: ["Feuille 1", "Corrélation", "Bravais-Pearson", "Spearman"]
+image: "/img/rassembler.png"
+description: "Description"
+---
+
+# Intervenant.e.s
+
+### Rédaction
+
+-   **Clément Poupelin**, [clementjc.poupelin\@gmail.com](mailto:clementjc.poupelin@gmail.com){.email}\
+
+### Relecture
+
+-   
+
+# Exercice
+
+Cette exercice à pour but de présenter un peu les coefficients de corrélation de **Bravais-Pearson** et **Spearman**.\
+
+
+On considère deux échantillons de $n$ variables $(X_1, ..., X_n)$ et $(Y_1, ..., Y_n)$.\
+La corrélation linéaire empirique $r$ entre les deux échantillons (corrélation de **Bravais-Pearson**) ce définit comme : 
+
+$$r = \frac{\sum_{i=1}^n(X_i - \bar{X})(Y_i - \bar{Y})}{\sqrt{\sum_{i=1}^n(X_i - \bar{X})^2}\sqrt{\sum_{i=1}^n(Y_i - \bar{Y})^2}} \in [-1, 1]$$
+Il s'agit d'une normalisation de la covariance entre $X$ et $Y$ afin de la ramener entre -1 et 1.
+
+
+
+Maintenant, on pose la fonction $f$ définie par $f(z) = \sum_{i=1}^{n} (X_i - zY_i)^2$.\
+On peut remarquer tout d'abord que : 
+
+  - $f(z) \geq 0, \quad \forall z \in \mathbb{R}$ 
+  
+  - $f(z) = \sum_{i=1}^{n} X_i^2 - 2z\sum_{i=1}^{n}X_iY_i + z^2\sum_{i=1}^{n} Y_i^2$
+
+Ainsi, on peut reconnaitre un polynome du second degré avec $\Delta = 4 \left[ (\sum_{i=1}^{n}X_iY_i)^2 - \sum_{i=1}^{n}X_i^2 \sum_{i=1}^{n}Y_i^2 \right]$.\ 
+
+Puis comme $f(z) \geq 0$, on aura que 
+
+\begin{align*}
+
+\Delta \leq 0 & \Leftrightarrow 4 \left[ (\sum_{i=1}^{n}X_i Y_i)^2 - \sum_{i=1}^{n}X_i^2 \sum_{i=1}^{n}Y_i^2 \right] \leq 0 \\
+
+& \Leftrightarrow (\sum_{i=1}^{n}X_i Y_i)^2 \leq \sum_{i=1}^{n}X_i^2 \sum_{i=1}^{n}Y_i^2 \\
+
+& \Leftrightarrow (\sum_{i=1}^{n}X_i Y_i)^2 \leq \sum_{i=1}^{n}X_i^2 \sum_{i=1}^{n}Y_i^2 \\
+
+& \Leftrightarrow \frac{(\sum_{i=1}^{n}X_i Y_i)^2}{\sum_{i=1}^{n}X_i^2 \sum_{i=1}^{n}Y_i^2} \leq 1 \\
+
+& \Leftrightarrow r^2 \leq 1 \\
+
+& \Leftrightarrow -1 \leq r \leq 1 \\
+
+\end{align*}
+
+
+
+
+
+Maintenant, on note $(r_1, ..., r_n)$ les rangs des variables $X_i$ et $(s_1, ..., s_n)$ les rangs des variables $Y_i$ dans chaque échantillon. On suppose qu'il n'y a pas d'ex-aequo, de telle sorte que les rangs vont de $1$ à $n$.\
+
+La **corrélation de Spearman** $\rho$ entre les échantillons $(X_1, ..., X_n)$ et $(Y_1, ..., Y_n)$ correspond à la corrélation linéaire entre leurs rangs.
+
+Ainsi, on peut calculer la moyenne et la variance empirique de l'échantillon $(r_1, ..., r_n)$ : 
+
+::: panel-tabset
+
+## Moyenne empirique
+
+\begin{align*}
+
+\frac{1}{n} \sum_{i=1}^{n} r_i & = \frac{1}{n} \sum_{i=1}^{n} i \\
+
+& = \frac{1}{n} \frac{n(n+1)}{2} \\
+
+& = \frac{n+1}{2} \\
+
+\end{align*}
+
+## Variance empirique
+
+
+\begin{align*}
+
+\frac{1}{n} \sum_{i=1}^{n} r_i^2 - \left( \frac{1}{n} \sum_{i=1}^{n} r_i \right)^2 & = \frac{1}{n} \sum_{i=1}^{n} i^2 - \left( \frac{n+1}{2} \right)^2 \\
+
+& = \frac{1}{n} \frac{n(n+1)(2n+1)}{6} -  \frac{(n+1)^2}{4}  \\
+
+& = \frac{(n+1)(2n+1)}{6} - \frac{(n+1)^2}{4} \\
+
+& = \frac{2(n+1)(2n+1)}{12} - \frac{3(n+1)^2}{12} \\
+
+& = \frac{1}{12} \left[(n+1)(2(n+1) - 3(n+1))\right] \\
+
+& = \frac{1}{12} \left[(n+1)(4n + 2 - 3n - 3)\right] \\
+
+& = \frac{1}{12} (n+1)(n-1) \\
+
+& = \frac{1}{12} (n^2-1) \\
+
+\end{align*}
+
+:::
+
+
+Cela nous permet donc de déduire que 
+
+\begin{align*}
+
+\rho & = \frac{\sum_{i=1}^n(r_i - \bar{r})(s_i - \bar{s})}{\sqrt{\sum_{i=1}^n(r_i - \bar{r})^2}\sqrt{\sum_{i=1}^n(s_i - \bar{s})^2}} \\
+
+& =  \frac{ \frac{1}{n} \sum_{i=1}^n(r_i - \bar{r})(s_i - \bar{s})}{\sqrt{  \frac{1}{n} \sum_{i=1}^n(r_i - \bar{r})^2}\sqrt{  \frac{1}{n} \sum_{i=1}^n(s_i - \bar{s})^2}} \\
+
+
+& = \frac{ \frac{1}{n} \sum_{i=1}^n r_is_i - \frac{1}{n} \sum_{i=1}^n r_i\bar{s} - \frac{1}{n} \sum_{i=1}^n \bar{r}s_i + \frac{1}{n} \sum_{i=1}^n \bar{r} \bar{s}}{\sqrt{  \frac{1}{12} n^2-1}\sqrt{ \frac{1}{12} n^2-1}} \\
+
+&= \frac{12}{n^2-1} \frac{1}{n} \left[ \sum_{i=1}^n r_is_i - \bar{s} \sum_{i=1}^n r_i - \bar{r} \sum_{i=1}^n s_i + n \bar{r} \bar{s} \right]\\
+
+&= \frac{12}{(n^2-1)n}  \left[ \sum_{i=1}^n r_is_i - \bar{s} n\bar{r} - \bar{r} n\bar{s} + n \bar{r} \bar{s} \right]\\
+
+
+&= \frac{12}{(n^2-1)n}  \left[ \sum_{i=1}^n r_is_i - \bar{s} n\bar{r}\right]\\
+
+
+&= \frac{12}{(n^2-1)n}  \left[ \sum_{i=1}^n r_is_i - n\frac{(n+1)^2}{4} \right]\\
+
+&= \frac{12\sum_{i=1}^n r_is_i - 3n(n+1)^2}{n(n^2-1)}\\
+
+\end{align*}
+
+
+
+
+
+
+Ensuite, soit $d_i = r_i - s_i$. Alors \
+
+$\sum_{i=1}^n d_i^2 = \sum_{i=1}^n r_i^2 + \sum_{i=1}^ns_i^2 - 2\sum_{i=1}^nr_is_i$ \
+$\quad \quad = \frac{2n(n+1)(2n+1)}{6} - 2\sum_{i=1}^nr_is_i$ \
+$\Leftrightarrow  6\sum_{i=1}^n d_i^2 =  2n(n+1)(2n+1) - 12\sum_{i=1}^nr_is_i$ \
+$\Leftrightarrow  12\sum_{i=1}^nr_is_i  =  2n(n+1)(2n+1) - 6\sum_{i=1}^n d_i^2$ \
+
+
+
+Ce qui peut nous permettre de déduire la valeur de $\rho$ en fonction de l'échantillon des différences $d_i$. 
+
+\begin{align*}
+
+\rho & = \frac{12\sum_{i=1}^n r_is_i - 3n(n+1)^2}{n(n^2-1)}\\
+
+& = \frac{ 2n(n+1)(2n+1) - 6\sum_{i=1}^n d_i^2 - 3n(n+1)^2}{n(n^2-1)}\\
+
+& = \frac{ (n+1)(2n(2n+1) - 3n(n+1))  - 6\sum_{i=1}^n d_i^2}{n(n^2-1)}\\
+
+& = \frac{ (n+1)(n^2-n)  - 6\sum_{i=1}^n d_i^2}{n(n^2-1)}\\
+
+& = \frac{ (n+1)(n-1)n  - 6\sum_{i=1}^n d_i^2}{n(n^2-1)}\\
+
+& = \frac{ (n^2-1)n  - 6\sum_{i=1}^n d_i^2}{n(n^2-1)}\\
+
+& = 1 - \frac{6\sum_{i=1}^n d_i^2}{n(n^2-1)}\\
+\end{align*}
+
+
+# Conclusion
+
+Nous avons pu définir et illustrer de manière concrète le lien entre les deux coefficients étudiés, en mettant en évidence leur complémentarité dans l’analyse statistique. Cette démarche nous a également permis de nous entraîner à la manipulation mathématique de ces coefficients, en comprenant non seulement leur interprétation, mais aussi les relations algébriques qui les unissent.
+Au-delà de l’aspect purement technique, cet exercice contribue à une meilleure compréhension des outils statistiques et de leur utilité dans l’analyse de données, en posant les bases nécessaires à une utilisation rigoureuse et critique dans des contextes réels.
