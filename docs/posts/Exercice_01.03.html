@@ -7,9 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Clément Poupelin">
-<meta name="description" content="Description">
+<meta name="dcterms.date" content="2025-04-11">
+<meta name="description" content="Régression simple par moindres carrés ordinaires">
 
-<title>Exercice 1.01 – Régression linéaire et logistique</title>
+<title>Exercice 1.03 – Régression linéaire et logistique</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -251,10 +252,10 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <div class="quarto-title-block"><div><h1 class="title">Exercice 1.01</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+      <div class="quarto-title-block"><div><h1 class="title">Exercice 1.03</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
                   <div>
         <div class="description">
-          Description
+          Régression simple par moindres carrés ordinaires
         </div>
       </div>
                           <div class="quarto-categories">
@@ -278,7 +279,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">Invalid Date</p>
+        <p class="date">April 11, 2025</p>
       </div>
     </div>
     
@@ -306,6 +307,7 @@ window.Quarto = {
   <li><a href="#relecture" id="toc-relecture" class="nav-link" data-scroll-target="#relecture">Relecture</a></li>
   </ul></li>
   <li><a href="#exercice" id="toc-exercice" class="nav-link" data-scroll-target="#exercice">Exercice</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -342,26 +344,33 @@ window.Quarto = {
 <li><p><span class="math inline">\(\frac{1}{20}\sum_{i=1}^{20}(y_i - \bar{y})^2 = 2.85\)</span></p></li>
 <li><p><span class="math inline">\(\frac{1}{20}\sum_{i=1}^{20}(x_i - \bar{x})(y_i - \bar{y}) = 6.26\)</span></p></li>
 </ul>
-<p>On note <span class="math inline">\(\hat{y} = \beta_0 + \beta_1x\)</span> l’estimation de la droite de régression par la méthode des moindres carrés ordinaires. Ainsi</p>
+<p>On note <span class="math inline">\(\hat{y} = \hat{\beta_0} + \hat{\beta_1}x\)</span> l’estimation de la droite de régression par la méthode des moindres carrés ordinaires. Ainsi</p>
 <ul>
-<li><p><span class="math inline">\(\beta_0\)</span></p></li>
-<li><p><span class="math inline">\(\beta_1\)</span></p></li>
+<li><p><span class="math inline">\(\hat{\beta_1} = \frac{\sum_{i=1}^n(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n}(x_i - \bar{x})^2}\)</span></p></li>
+<li><p><span class="math inline">\(\hat{\beta_0} = \bar{y} - \hat{\beta_1}\bar{x}\)</span></p></li>
 </ul>
 <p>Ce qui nous permet d’effectuer les calculs suivants :</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Calcul <span class="math inline">\(\beta_0\)</span></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Calcul <span class="math inline">\(\beta_1\)</span></a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Calcul <span class="math inline">\(\hat{\beta_1}\)</span></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Calcul <span class="math inline">\(\hat{\beta_0}\)</span></a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-
+<p><span class="math inline">\(\hat{\beta_1} = \frac{\sum_{i=1}^{20}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{20}(x_i - \bar{x})^2} = \frac{6.26}{28.29} \approx 0.22\)</span></p>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-
+<p><span class="math inline">\(\hat{\beta_0} = \bar{y} - \hat{\beta_1}\bar{x} = 18.34 - 0.22\times34.9 \approx 10.66\)</span></p>
 </div>
 </div>
 </div>
-<ol start="2" type="1">
-<li>Donner une mesure de qualité d’ajustement des données au modèle. Exprimer cette mesure à l’aide des statistiques élémentaires. Calculer et commenter.</li>
-</ol>
+<p>Maintenant, on peut exprimer une une mesure de qualité d’ajustement des données au modèle à l’aide des statistiques élémentaires. C’est à dire que l’on va utiliser le coefficient de corrélation :</p>
+<p><span class="math display">\[r = \frac{\sum_{i=1}^{20}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{20}(x_i - \bar{x})^2}\sqrt{\sum_{i=1}^{20}(y_i - \bar{y})^2}} \approx 0.70\]</span></p>
+<p>Ici, <span class="math inline">\(r\)</span>, qui est une valeur dans <span class="math inline">\([-1, 1]\)</span>, est suffisament proche de 1 pour considérer que le modèle est bon.</p>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>Dans cet exercice, nous avons pu nous entraîner à la mise en œuvre d’un <strong>modèle linéaire simple</strong>. Cette approche permet de modéliser la relation entre <strong>une variable explicative</strong> et <strong>une variable à expliquer</strong>.</p>
+<p><strong>Dans le cadre d’une régression simple, le coefficient de corrélation <span class="math inline">\(r\)</span> constitue une mesure pertinente de la qualité de l’ajustement</strong>. Plus <span class="math inline">\(r\)</span> est proche de 1 (ou de -1), plus la relation linéaire entre les deux variables est forte. En particulier, un <span class="math inline">\(r\)</span> proche de 1 indique une forte corrélation positive, ce qui signifie que le modèle linéaire décrit bien la tendance générale des données.<br>
+</p>
+<p>Toutefois, il est important de garder à l’esprit que <span class="math inline">\(r\)</span> ne suffit pas à lui seul pour évaluer la qualité d’un modèle, l’analyse des résidus et d’autres indicateurs (comme <span class="math inline">\(R^2\)</span>, l’erreur quadratique, …) sont également nécessaires pour une évaluation complète.</p>
 
 
 <!-- -->
@@ -982,9 +991,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Exercice 1.01"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Exercice 1.03"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Clément Poupelin"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2025-04-xx"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2025-04-11"</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">date-modified:</span><span class="co"> "`r Sys.Date()`"</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
@@ -1001,7 +1010,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> ["Feuille 1", "Régression", "MCO"]</span></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> "/img/analyse-de-regression.png"</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Description"</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Régression simple par moindres carrés ordinaires"</span></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu"># Intervenant.e.s</span></span>
@@ -1031,33 +1040,46 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>On note $\hat{y} = \beta_0 + \beta_1x$ l’estimation de la droite de régression par la méthode des moindres carrés</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>On note $\hat{y} = \hat{\beta_0} + \hat{\beta_1}x$ l’estimation de la droite de régression par la méthode des moindres carrés</span>
 <span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>ordinaires. Ainsi </span>
 <span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>$\beta_0$ </span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>$\hat{\beta_1} = \frac{\sum_{i=1}^n(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n}(x_i - \bar{x})^2}$ </span>
 <span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>$\beta_1$</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>$\hat{\beta_0} = \bar{y} - \hat{\beta_1}\bar{x}$</span>
 <span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>Ce qui nous permet d'effectuer les calculs suivants :</span>
 <span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>::: panel-tabset </span>
 <span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="fu">## Calcul $\beta_0$</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="fu">## Calcul $\hat{\beta_1}$</span></span>
 <span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="fu">## Calcul $\beta_1$</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>$\hat{\beta_1} = \frac{\sum_{i=1}^{20}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{20}(x_i - \bar{x})^2} = \frac{6.26}{28.29} \approx 0.22$</span>
 <span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="fu">## Calcul $\hat{\beta_0}$</span></span>
 <span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>$\hat{\beta_0} = \bar{y} - \hat{\beta_1}\bar{x} = 18.34 - 0.22\times34.9 \approx 10.66$</span>
 <span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>(2) Donner une mesure de qualité d’ajustement des données au modèle. Exprimer cette mesure à</span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>l’aide des statistiques élémentaires. Calculer et commenter.</span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>Maintenant, on peut exprimer une une mesure de qualité d’ajustement des données au modèle à</span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>l’aide des statistiques élémentaires. C'est à dire que l'on va utiliser le coefficient de corrélation : </span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>$$r = \frac{\sum_{i=1}^{20}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{20}(x_i - \bar{x})^2}\sqrt{\sum_{i=1}^{20}(y_i - \bar{y})^2}} \approx 0.70$$ </span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>Ici, $r$, qui est une valeur dans $<span class="co">[</span><span class="ot">-1, 1</span><span class="co">]</span>$, est suffisament proche de 1 pour considérer que le modèle est bon.</span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conclusion</span></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>Dans cet exercice, nous avons pu nous entraîner à la mise en œuvre d’un **modèle linéaire simple**. Cette approche permet de modéliser la relation entre **une variable explicative** et **une variable à expliquer**.</span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>**Dans le cadre d'une régression simple, le coefficient de corrélation $r$ constitue une mesure pertinente de la qualité de l’ajustement**. Plus $r$ est proche de 1 (ou de -1), plus la relation linéaire entre les deux variables est forte. En particulier, un $r$ proche de 1 indique une forte corrélation positive, ce qui signifie que le modèle linéaire décrit bien la tendance générale des données.\</span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>Toutefois, il est important de garder à l’esprit que $r$ ne suffit pas à lui seul pour évaluer la qualité d’un modèle, l’analyse des résidus et d'autres indicateurs (comme $R^2$, l’erreur quadratique, ...) sont également nécessaires pour une évaluation complète.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

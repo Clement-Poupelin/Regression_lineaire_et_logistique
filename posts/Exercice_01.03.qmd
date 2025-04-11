@@ -1,7 +1,7 @@
 ---
-title: "Exercice 1.01"
+title: "Exercice 1.03"
 author: "Clément Poupelin"
-date: "2025-04-xx"
+date: "2025-04-11"
 date-modified: "`r Sys.Date()`"
 format: 
   html:
@@ -18,7 +18,7 @@ number-sections: false
 editor: visual
 categories: ["Feuille 1", "Régression", "MCO"]
 image: "/img/analyse-de-regression.png"
-description: "Description"
+description: "Régression simple par moindres carrés ordinaires"
 ---
 
 # Intervenant.e.s
@@ -48,31 +48,44 @@ on a mesuré 20 couples diamètre-hauteur et les résultats ci-dessous sont disp
 
 
 
-On note $\hat{y} = \beta_0 + \beta_1x$ l’estimation de la droite de régression par la méthode des moindres carrés
+On note $\hat{y} = \hat{\beta_0} + \hat{\beta_1}x$ l’estimation de la droite de régression par la méthode des moindres carrés
 ordinaires. Ainsi 
 
-  - $\beta_0$ 
+  - $\hat{\beta_1} = \frac{\sum_{i=1}^n(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n}(x_i - \bar{x})^2}$ 
   
-  - $\beta_1$
+  - $\hat{\beta_0} = \bar{y} - \hat{\beta_1}\bar{x}$
   
   
 Ce qui nous permet d'effectuer les calculs suivants :
 
 ::: panel-tabset 
 
-## Calcul $\beta_0$
+## Calcul $\hat{\beta_1}$
 
-## Calcul $\beta_1$
+$\hat{\beta_1} = \frac{\sum_{i=1}^{20}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{20}(x_i - \bar{x})^2} = \frac{6.26}{28.29} \approx 0.22$
+
+## Calcul $\hat{\beta_0}$
+
+$\hat{\beta_0} = \bar{y} - \hat{\beta_1}\bar{x} = 18.34 - 0.22\times34.9 \approx 10.66$
 
 :::
 
 
 
+Maintenant, on peut exprimer une une mesure de qualité d’ajustement des données au modèle à
+l’aide des statistiques élémentaires. C'est à dire que l'on va utiliser le coefficient de corrélation : 
+
+$$r = \frac{\sum_{i=1}^{20}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{20}(x_i - \bar{x})^2}\sqrt{\sum_{i=1}^{20}(y_i - \bar{y})^2}} \approx 0.70$$ 
 
 
-
-(2) Donner une mesure de qualité d’ajustement des données au modèle. Exprimer cette mesure à
-l’aide des statistiques élémentaires. Calculer et commenter.
+Ici, $r$, qui est une valeur dans $[-1, 1]$, est suffisament proche de 1 pour considérer que le modèle est bon.
 
 
+# Conclusion
+
+Dans cet exercice, nous avons pu nous entraîner à la mise en œuvre d’un **modèle linéaire simple**. Cette approche permet de modéliser la relation entre **une variable explicative** et **une variable à expliquer**.
+
+**Dans le cadre d'une régression simple, le coefficient de corrélation $r$ constitue une mesure pertinente de la qualité de l’ajustement**. Plus $r$ est proche de 1 (ou de -1), plus la relation linéaire entre les deux variables est forte. En particulier, un $r$ proche de 1 indique une forte corrélation positive, ce qui signifie que le modèle linéaire décrit bien la tendance générale des données.\
+
+Toutefois, il est important de garder à l’esprit que $r$ ne suffit pas à lui seul pour évaluer la qualité d’un modèle, l’analyse des résidus et d'autres indicateurs (comme $R^2$, l’erreur quadratique, ...) sont également nécessaires pour une évaluation complète.
 

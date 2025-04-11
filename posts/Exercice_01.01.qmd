@@ -18,7 +18,7 @@ number-sections: false
 editor: visual
 categories: ["Feuille 1", "Corrélation", "Bravais-Pearson", "Spearman"]
 image: "/img/rassembler.png"
-description: "Description"
+description: "Présentation des coefficients de Bravais-Pearson et Spearman et leur lien linéaire"
 ---
 
 # Intervenant.e.s
