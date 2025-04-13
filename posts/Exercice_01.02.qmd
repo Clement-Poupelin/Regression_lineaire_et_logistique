@@ -1,5 +1,5 @@
 ---
-title: "Exercice 2"
+title: "Exercice 1.02"
 author: "Clément Poupelin"
 date: "2025-04-xx"
 date-modified: "`r Sys.Date()`"
@@ -53,15 +53,12 @@ description: "Description"
 
 # Données
 
-| Table de données |
-|:---------:|:-----:|:------:|:------:|:------:|:------:|:------:|:------:| 
-| $x$ | 1000 | 800 | 600 | 450 | 300 | 200 | 100 |
-| $y$ | 573 | 534 | 495 | 451 | 395 | 337 | 253 |
+| Table de données |      |     |     |     |     |     |     |
+|:----------------:|:----:|:---:|:---:|:---:|:---:|:---:|:---:|
+|       $x$        | 1000 | 800 | 600 | 450 | 300 | 200 | 100 |
+|       $y$        | 573  | 534 | 495 | 451 | 395 | 337 | 253 |
 
-
-
-Représenter sur deux graphiques différents y en fonction de x et les rangs de y en fonction des
-rangs de x. Commenter.
+Représenter sur deux graphiques différents y en fonction de x et les rangs de y en fonction des rangs de x. Commenter.
 
 ```{r}
 library(ggplot2)
@@ -99,10 +96,7 @@ ggplot(d2) +
   ylab("Rank(y) values")
 ```
 
-
-Écrire des fonction R permettant de calculer le coefficient de Bravais-Pearson et celui de Spearman.
-Calculer leur valeur sur les données considérées.
-
+Écrire des fonction R permettant de calculer le coefficient de Bravais-Pearson et celui de Spearman. Calculer leur valeur sur les données considérées.
 
 ```{r}
 #### Création de fct pour les différentes corrélation 
@@ -144,17 +138,13 @@ cor(d$x, d$y, method="pearson")
 # verif ok 
 ```
 
-Cet exemple permet d’illustrer une différence entre les deux coefficients précédents, laquelle ?
-Commenter.
+Cet exemple permet d’illustrer une différence entre les deux coefficients précédents, laquelle ? Commenter.
 
-Maintenant, au vu de l'alignement des points sur le graphes des rank, être proche  de 1 semble normal
+Maintenant, au vu de l'alignement des points sur le graphes des rank, être proche de 1 semble normal
 
-Le coeff de Spearman va regarder la monotonie (avec le rank) entre x et y et ici c'est monotone 
+Le coeff de Spearman va regarder la monotonie (avec le rank) entre x et y et ici c'est monotone
 
 On a une relation déterministe entre x et y. On peut donc écrire y = f(x)
-
-
-
 
 # Analyse
 

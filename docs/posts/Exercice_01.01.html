@@ -1169,182 +1169,170 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span></span>
 <span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="fu"># Setup</span></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>:::: panel-tabset</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="fu">## Packages</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, setup, warning=FALSE, message=FALSE, include=FALSE}</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="in">library(dplyr)        # manipulation des données</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, setup, warning=FALSE, message=FALSE}</span></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="in">library(dplyr)        # manipulation des données</span></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="fu"># Exercice</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>Cette exercice à pour but de présenter un peu les coefficients de corrélation de **Bravais-Pearson** et **Spearman**.\</span>
 <span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="fu">## Seed</span></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">140400</span>)</span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>On considère deux échantillons de $n$ variables $(X_1, ..., X_n)$ et $(Y_1, ..., Y_n)$.\</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>La corrélation linéaire empirique $r$ entre les deux échantillons (corrélation de **Bravais-Pearson**) ce définit comme : </span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>$$r = \frac{\sum_{i=1}^n(X_i - \bar{X})(Y_i - \bar{Y})}{\sqrt{\sum_{i=1}^n(X_i - \bar{X})^2}\sqrt{\sum_{i=1}^n(Y_i - \bar{Y})^2}} \in <span class="co">[</span><span class="ot">-1, 1</span><span class="co">]</span>$$</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>Il s'agit d'une normalisation de la covariance entre $X$ et $Y$ afin de la ramener entre -1 et 1.</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>::::</span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a><span class="fu"># Exercice</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>Maintenant, on pose la fonction $f$ définie par $f(z) = \sum_{i=1}^{n} (X_i - zY_i)^2$.\</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>On peut remarquer tout d'abord que : </span>
 <span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>Cette exercice à pour but de présenter un peu les coefficients de corrélation de **Bravais-Pearson** et **Spearman**.\</span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>On considère deux échantillons de $n$ variables $(X_1, ..., X_n)$ et $(Y_1, ..., Y_n)$.\</span>
-<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>La corrélation linéaire empirique $r$ entre les deux échantillons (corrélation de **Bravais-Pearson**) ce définit comme : </span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>$f(z) \geq 0, \quad \forall z \in \mathbb{R}$ </span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>$f(z) = \sum_{i=1}^{n} X_i^2 - 2z\sum_{i=1}^{n}X_iY_i + z^2\sum_{i=1}^{n} Y_i^2$</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>Ainsi, on peut reconnaitre un polynome du second degré avec $\Delta = 4 \left<span class="co">[</span><span class="ot"> (\sum_{i=1}^{n}X_iY_i)^2 - \sum_{i=1}^{n}X_i^2 \sum_{i=1}^{n}Y_i^2 \right</span><span class="co">]</span>$.\ </span>
 <span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>$$r = \frac{\sum_{i=1}^n(X_i - \bar{X})(Y_i - \bar{Y})}{\sqrt{\sum_{i=1}^n(X_i - \bar{X})^2}\sqrt{\sum_{i=1}^n(Y_i - \bar{Y})^2}} \in <span class="co">[</span><span class="ot">-1, 1</span><span class="co">]</span>$$</span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>Il s'agit d'une normalisation de la covariance entre $X$ et $Y$ afin de la ramener entre -1 et 1.</span>
-<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>Puis comme $f(z) \geq 0$, on aura que </span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>\begin{align*}</span>
 <span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>Maintenant, on pose la fonction $f$ définie par $f(z) = \sum_{i=1}^{n} (X_i - zY_i)^2$.\</span>
-<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>On peut remarquer tout d'abord que : </span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>\Delta \leq 0 &amp; \Leftrightarrow 4 \left<span class="co">[</span><span class="ot"> (\sum_{i=1}^{n}X_i Y_i)^2 - \sum_{i=1}^{n}X_i^2 \sum_{i=1}^{n}Y_i^2 \right</span><span class="co">]</span> \leq 0 <span class="sc">\\</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>&amp; \Leftrightarrow (\sum_{i=1}^{n}X_i Y_i)^2 \leq \sum_{i=1}^{n}X_i^2 \sum_{i=1}^{n}Y_i^2 <span class="sc">\\</span></span>
 <span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>$f(z) \geq 0, \quad \forall z \in \mathbb{R}$ </span>
-<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>$f(z) = \sum_{i=1}^{n} X_i^2 - 2z\sum_{i=1}^{n}X_iY_i + z^2\sum_{i=1}^{n} Y_i^2$</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>&amp; \Leftrightarrow (\sum_{i=1}^{n}X_i Y_i)^2 \leq \sum_{i=1}^{n}X_i^2 \sum_{i=1}^{n}Y_i^2 <span class="sc">\\</span></span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>&amp; \Leftrightarrow \frac{(\sum_{i=1}^{n}X_i Y_i)^2}{\sum_{i=1}^{n}X_i^2 \sum_{i=1}^{n}Y_i^2} \leq 1 <span class="sc">\\</span></span>
 <span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>Ainsi, on peut reconnaitre un polynome du second degré avec $\Delta = 4 \left<span class="co">[</span><span class="ot"> (\sum_{i=1}^{n}X_iY_i)^2 - \sum_{i=1}^{n}X_i^2 \sum_{i=1}^{n}Y_i^2 \right</span><span class="co">]</span>$.\ </span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>&amp; \Leftrightarrow r^2 \leq 1 <span class="sc">\\</span></span>
 <span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>Puis comme $f(z) \geq 0$, on aura que </span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>&amp; \Leftrightarrow -1 \leq r \leq 1 <span class="sc">\\</span></span>
 <span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>\begin{align*}</span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>\end{align*}</span>
 <span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>\Delta \leq 0 &amp; \Leftrightarrow 4 \left<span class="co">[</span><span class="ot"> (\sum_{i=1}^{n}X_i Y_i)^2 - \sum_{i=1}^{n}X_i^2 \sum_{i=1}^{n}Y_i^2 \right</span><span class="co">]</span> \leq 0 <span class="sc">\\</span></span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>&amp; \Leftrightarrow (\sum_{i=1}^{n}X_i Y_i)^2 \leq \sum_{i=1}^{n}X_i^2 \sum_{i=1}^{n}Y_i^2 <span class="sc">\\</span></span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>&amp; \Leftrightarrow (\sum_{i=1}^{n}X_i Y_i)^2 \leq \sum_{i=1}^{n}X_i^2 \sum_{i=1}^{n}Y_i^2 <span class="sc">\\</span></span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>Maintenant, on note $(r_1, ..., r_n)$ les rangs des variables $X_i$ et $(s_1, ..., s_n)$ les rangs des variables $Y_i$ dans chaque échantillon. On suppose qu'il n'y a pas d'ex-aequo, de telle sorte que les rangs vont de $1$ à $n$.\</span>
 <span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>&amp; \Leftrightarrow \frac{(\sum_{i=1}^{n}X_i Y_i)^2}{\sum_{i=1}^{n}X_i^2 \sum_{i=1}^{n}Y_i^2} \leq 1 <span class="sc">\\</span></span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>La **corrélation de Spearman** $\rho$ entre les échantillons $(X_1, ..., X_n)$ et $(Y_1, ..., Y_n)$ correspond à la corrélation linéaire entre leurs rangs.</span>
 <span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>&amp; \Leftrightarrow r^2 \leq 1 <span class="sc">\\</span></span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>Ainsi, on peut calculer la moyenne et la variance empirique de l'échantillon $(r_1, ..., r_n)$ : </span>
 <span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>&amp; \Leftrightarrow -1 \leq r \leq 1 <span class="sc">\\</span></span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
 <span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>\end{align*}</span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a><span class="fu">## Moyenne empirique</span></span>
 <span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>\begin{align*}</span>
 <span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>\frac{1}{n} \sum_{i=1}^{n} r_i &amp; = \frac{1}{n} \sum_{i=1}^{n} i <span class="sc">\\</span></span>
 <span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>Maintenant, on note $(r_1, ..., r_n)$ les rangs des variables $X_i$ et $(s_1, ..., s_n)$ les rangs des variables $Y_i$ dans chaque échantillon. On suppose qu'il n'y a pas d'ex-aequo, de telle sorte que les rangs vont de $1$ à $n$.\</span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{1}{n} \frac{n(n+1)}{2} <span class="sc">\\</span></span>
 <span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>La **corrélation de Spearman** $\rho$ entre les échantillons $(X_1, ..., X_n)$ et $(Y_1, ..., Y_n)$ correspond à la corrélation linéaire entre leurs rangs.</span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{n+1}{2} <span class="sc">\\</span></span>
 <span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>Ainsi, on peut calculer la moyenne et la variance empirique de l'échantillon $(r_1, ..., r_n)$ : </span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>\end{align*}</span>
 <span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a><span class="fu">## Variance empirique</span></span>
 <span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a><span class="fu">## Moyenne empirique</span></span>
-<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a>\begin{align*}</span>
-<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a>\frac{1}{n} \sum_{i=1}^{n} r_i &amp; = \frac{1}{n} \sum_{i=1}^{n} i <span class="sc">\\</span></span>
-<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{1}{n} \frac{n(n+1)}{2} <span class="sc">\\</span></span>
-<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{n+1}{2} <span class="sc">\\</span></span>
-<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a>\end{align*}</span>
-<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a><span class="fu">## Variance empirique</span></span>
-<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a>\begin{align*}</span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a>\frac{1}{n} \sum_{i=1}^{n} r_i^2 - \left( \frac{1}{n} \sum_{i=1}^{n} r_i \right)^2 &amp; = \frac{1}{n} \sum_{i=1}^{n} i^2 - \left( \frac{n+1}{2} \right)^2 <span class="sc">\\</span></span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{1}{n} \frac{n(n+1)(2n+1)}{6} -  \frac{(n+1)^2}{4}  <span class="sc">\\</span></span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{(n+1)(2n+1)}{6} - \frac{(n+1)^2}{4} <span class="sc">\\</span></span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{2(n+1)(2n+1)}{12} - \frac{3(n+1)^2}{12} <span class="sc">\\</span></span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{1}{12} \left<span class="co">[</span><span class="ot">(n+1)(2(n+1) - 3(n+1))\right</span><span class="co">]</span> <span class="sc">\\</span></span>
+<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{1}{12} \left<span class="co">[</span><span class="ot">(n+1)(4n + 2 - 3n - 3)\right</span><span class="co">]</span> <span class="sc">\\</span></span>
 <span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a>\begin{align*}</span>
+<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{1}{12} (n+1)(n-1) <span class="sc">\\</span></span>
 <span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a>\frac{1}{n} \sum_{i=1}^{n} r_i^2 - \left( \frac{1}{n} \sum_{i=1}^{n} r_i \right)^2 &amp; = \frac{1}{n} \sum_{i=1}^{n} i^2 - \left( \frac{n+1}{2} \right)^2 <span class="sc">\\</span></span>
+<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{1}{12} (n^2-1) <span class="sc">\\</span></span>
 <span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{1}{n} \frac{n(n+1)(2n+1)}{6} -  \frac{(n+1)^2}{4}  <span class="sc">\\</span></span>
+<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a>\end{align*}</span>
 <span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{(n+1)(2n+1)}{6} - \frac{(n+1)^2}{4} <span class="sc">\\</span></span>
+<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{2(n+1)(2n+1)}{12} - \frac{3(n+1)^2}{12} <span class="sc">\\</span></span>
-<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{1}{12} \left<span class="co">[</span><span class="ot">(n+1)(2(n+1) - 3(n+1))\right</span><span class="co">]</span> <span class="sc">\\</span></span>
-<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{1}{12} \left<span class="co">[</span><span class="ot">(n+1)(4n + 2 - 3n - 3)\right</span><span class="co">]</span> <span class="sc">\\</span></span>
-<span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{1}{12} (n+1)(n-1) <span class="sc">\\</span></span>
-<span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{1}{12} (n^2-1) <span class="sc">\\</span></span>
+<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a>Cela nous permet donc de déduire que </span>
+<span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a>\begin{align*}</span>
+<span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a>\rho &amp; = \frac{\sum_{i=1}^n(r_i - \bar{r})(s_i - \bar{s})}{\sqrt{\sum_{i=1}^n(r_i - \bar{r})^2}\sqrt{\sum_{i=1}^n(s_i - \bar{s})^2}} <span class="sc">\\</span></span>
+<span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a>&amp; =  \frac{ \frac{1}{n} \sum_{i=1}^n(r_i - \bar{r})(s_i - \bar{s})}{\sqrt{  \frac{1}{n} \sum_{i=1}^n(r_i - \bar{r})^2}\sqrt{  \frac{1}{n} \sum_{i=1}^n(s_i - \bar{s})^2}} <span class="sc">\\</span></span>
+<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a>\end{align*}</span>
+<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{ \frac{1}{n} \sum_{i=1}^n r_is_i - \frac{1}{n} \sum_{i=1}^n r_i\bar{s} - \frac{1}{n} \sum_{i=1}^n \bar{r}s_i + \frac{1}{n} \sum_{i=1}^n \bar{r} \bar{s}}{\sqrt{  \frac{1}{12} n^2-1}\sqrt{ \frac{1}{12} n^2-1}} <span class="sc">\\</span></span>
 <span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a>&amp;= \frac{12}{n^2-1} \frac{1}{n} \left<span class="co">[</span><span class="ot"> \sum_{i=1}^n r_is_i - \bar{s} \sum_{i=1}^n r_i - \bar{r} \sum_{i=1}^n s_i + n \bar{r} \bar{s} \right</span><span class="co">]</span><span class="sc">\\</span></span>
 <span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a>Cela nous permet donc de déduire que </span>
+<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a>&amp;= \frac{12}{(n^2-1)n}  \left<span class="co">[</span><span class="ot"> \sum_{i=1}^n r_is_i - \bar{s} n\bar{r} - \bar{r} n\bar{s} + n \bar{r} \bar{s} \right</span><span class="co">]</span><span class="sc">\\</span></span>
+<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a>\begin{align*}</span>
+<span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a>&amp;= \frac{12}{(n^2-1)n}  \left<span class="co">[</span><span class="ot"> \sum_{i=1}^n r_is_i - \bar{s} n\bar{r}\right</span><span class="co">]</span><span class="sc">\\</span></span>
 <span id="cb5-146"><a href="#cb5-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-147"><a href="#cb5-147" aria-hidden="true" tabindex="-1"></a>\rho &amp; = \frac{\sum_{i=1}^n(r_i - \bar{r})(s_i - \bar{s})}{\sqrt{\sum_{i=1}^n(r_i - \bar{r})^2}\sqrt{\sum_{i=1}^n(s_i - \bar{s})^2}} <span class="sc">\\</span></span>
-<span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a>&amp; =  \frac{ \frac{1}{n} \sum_{i=1}^n(r_i - \bar{r})(s_i - \bar{s})}{\sqrt{  \frac{1}{n} \sum_{i=1}^n(r_i - \bar{r})^2}\sqrt{  \frac{1}{n} \sum_{i=1}^n(s_i - \bar{s})^2}} <span class="sc">\\</span></span>
-<span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-147"><a href="#cb5-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a>&amp;= \frac{12}{(n^2-1)n}  \left<span class="co">[</span><span class="ot"> \sum_{i=1}^n r_is_i - n\frac{(n+1)^2}{4} \right</span><span class="co">]</span><span class="sc">\\</span></span>
+<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a>&amp;= \frac{12\sum_{i=1}^n r_is_i - 3n(n+1)^2}{n(n^2-1)}<span class="sc">\\</span></span>
 <span id="cb5-151"><a href="#cb5-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{ \frac{1}{n} \sum_{i=1}^n r_is_i - \frac{1}{n} \sum_{i=1}^n r_i\bar{s} - \frac{1}{n} \sum_{i=1}^n \bar{r}s_i + \frac{1}{n} \sum_{i=1}^n \bar{r} \bar{s}}{\sqrt{  \frac{1}{12} n^2-1}\sqrt{ \frac{1}{12} n^2-1}} <span class="sc">\\</span></span>
+<span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a>\end{align*}</span>
 <span id="cb5-153"><a href="#cb5-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a>&amp;= \frac{12}{n^2-1} \frac{1}{n} \left<span class="co">[</span><span class="ot"> \sum_{i=1}^n r_is_i - \bar{s} \sum_{i=1}^n r_i - \bar{r} \sum_{i=1}^n s_i + n \bar{r} \bar{s} \right</span><span class="co">]</span><span class="sc">\\</span></span>
+<span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-156"><a href="#cb5-156" aria-hidden="true" tabindex="-1"></a>&amp;= \frac{12}{(n^2-1)n}  \left<span class="co">[</span><span class="ot"> \sum_{i=1}^n r_is_i - \bar{s} n\bar{r} - \bar{r} n\bar{s} + n \bar{r} \bar{s} \right</span><span class="co">]</span><span class="sc">\\</span></span>
+<span id="cb5-156"><a href="#cb5-156" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-157"><a href="#cb5-157" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-158"><a href="#cb5-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a>&amp;= \frac{12}{(n^2-1)n}  \left<span class="co">[</span><span class="ot"> \sum_{i=1}^n r_is_i - \bar{s} n\bar{r}\right</span><span class="co">]</span><span class="sc">\\</span></span>
+<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a>Ensuite, soit $d_i = r_i - s_i$. Alors \</span>
 <span id="cb5-160"><a href="#cb5-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-162"><a href="#cb5-162" aria-hidden="true" tabindex="-1"></a>&amp;= \frac{12}{(n^2-1)n}  \left<span class="co">[</span><span class="ot"> \sum_{i=1}^n r_is_i - n\frac{(n+1)^2}{4} \right</span><span class="co">]</span><span class="sc">\\</span></span>
-<span id="cb5-163"><a href="#cb5-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a>&amp;= \frac{12\sum_{i=1}^n r_is_i - 3n(n+1)^2}{n(n^2-1)}<span class="sc">\\</span></span>
+<span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a>$\sum_{i=1}^n d_i^2 = \sum_{i=1}^n r_i^2 + \sum_{i=1}^ns_i^2 - 2\sum_{i=1}^nr_is_i$ \</span>
+<span id="cb5-162"><a href="#cb5-162" aria-hidden="true" tabindex="-1"></a>$\quad \quad = \frac{2n(n+1)(2n+1)}{6} - 2\sum_{i=1}^nr_is_i$ \</span>
+<span id="cb5-163"><a href="#cb5-163" aria-hidden="true" tabindex="-1"></a>$\Leftrightarrow  6\sum_{i=1}^n d_i^2 =  2n(n+1)(2n+1) - 12\sum_{i=1}^nr_is_i$ \</span>
+<span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a>$\Leftrightarrow  12\sum_{i=1}^nr_is_i  =  2n(n+1)(2n+1) - 6\sum_{i=1}^n d_i^2$ \</span>
 <span id="cb5-165"><a href="#cb5-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-166"><a href="#cb5-166" aria-hidden="true" tabindex="-1"></a>\end{align*}</span>
+<span id="cb5-166"><a href="#cb5-166" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-167"><a href="#cb5-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a>Ce qui peut nous permettre de déduire la valeur de $\rho$ en fonction de l'échantillon des différences $d_i$. </span>
 <span id="cb5-169"><a href="#cb5-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-170"><a href="#cb5-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-170"><a href="#cb5-170" aria-hidden="true" tabindex="-1"></a>\begin{align*}</span>
 <span id="cb5-171"><a href="#cb5-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-172"><a href="#cb5-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-173"><a href="#cb5-173" aria-hidden="true" tabindex="-1"></a>Ensuite, soit $d_i = r_i - s_i$. Alors \</span>
-<span id="cb5-174"><a href="#cb5-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-175"><a href="#cb5-175" aria-hidden="true" tabindex="-1"></a>$\sum_{i=1}^n d_i^2 = \sum_{i=1}^n r_i^2 + \sum_{i=1}^ns_i^2 - 2\sum_{i=1}^nr_is_i$ \</span>
-<span id="cb5-176"><a href="#cb5-176" aria-hidden="true" tabindex="-1"></a>$\quad \quad = \frac{2n(n+1)(2n+1)}{6} - 2\sum_{i=1}^nr_is_i$ \</span>
-<span id="cb5-177"><a href="#cb5-177" aria-hidden="true" tabindex="-1"></a>$\Leftrightarrow  6\sum_{i=1}^n d_i^2 =  2n(n+1)(2n+1) - 12\sum_{i=1}^nr_is_i$ \</span>
-<span id="cb5-178"><a href="#cb5-178" aria-hidden="true" tabindex="-1"></a>$\Leftrightarrow  12\sum_{i=1}^nr_is_i  =  2n(n+1)(2n+1) - 6\sum_{i=1}^n d_i^2$ \</span>
+<span id="cb5-172"><a href="#cb5-172" aria-hidden="true" tabindex="-1"></a>\rho &amp; = \frac{12\sum_{i=1}^n r_is_i - 3n(n+1)^2}{n(n^2-1)}<span class="sc">\\</span></span>
+<span id="cb5-173"><a href="#cb5-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-174"><a href="#cb5-174" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{ 2n(n+1)(2n+1) - 6\sum_{i=1}^n d_i^2 - 3n(n+1)^2}{n(n^2-1)}<span class="sc">\\</span></span>
+<span id="cb5-175"><a href="#cb5-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-176"><a href="#cb5-176" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{ (n+1)(2n(2n+1) - 3n(n+1))  - 6\sum_{i=1}^n d_i^2}{n(n^2-1)}<span class="sc">\\</span></span>
+<span id="cb5-177"><a href="#cb5-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-178"><a href="#cb5-178" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{ (n+1)(n^2-n)  - 6\sum_{i=1}^n d_i^2}{n(n^2-1)}<span class="sc">\\</span></span>
 <span id="cb5-179"><a href="#cb5-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-180"><a href="#cb5-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-180"><a href="#cb5-180" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{ (n+1)(n-1)n  - 6\sum_{i=1}^n d_i^2}{n(n^2-1)}<span class="sc">\\</span></span>
 <span id="cb5-181"><a href="#cb5-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-182"><a href="#cb5-182" aria-hidden="true" tabindex="-1"></a>Ce qui peut nous permettre de déduire la valeur de $\rho$ en fonction de l'échantillon des différences $d_i$. </span>
+<span id="cb5-182"><a href="#cb5-182" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{ (n^2-1)n  - 6\sum_{i=1}^n d_i^2}{n(n^2-1)}<span class="sc">\\</span></span>
 <span id="cb5-183"><a href="#cb5-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-184"><a href="#cb5-184" aria-hidden="true" tabindex="-1"></a>\begin{align*}</span>
-<span id="cb5-185"><a href="#cb5-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-186"><a href="#cb5-186" aria-hidden="true" tabindex="-1"></a>\rho &amp; = \frac{12\sum_{i=1}^n r_is_i - 3n(n+1)^2}{n(n^2-1)}<span class="sc">\\</span></span>
+<span id="cb5-184"><a href="#cb5-184" aria-hidden="true" tabindex="-1"></a>&amp; = 1 - \frac{6\sum_{i=1}^n d_i^2}{n(n^2-1)}<span class="sc">\\</span></span>
+<span id="cb5-185"><a href="#cb5-185" aria-hidden="true" tabindex="-1"></a>\end{align*}</span>
+<span id="cb5-186"><a href="#cb5-186" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-187"><a href="#cb5-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-188"><a href="#cb5-188" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{ 2n(n+1)(2n+1) - 6\sum_{i=1}^n d_i^2 - 3n(n+1)^2}{n(n^2-1)}<span class="sc">\\</span></span>
+<span id="cb5-188"><a href="#cb5-188" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conclusion</span></span>
 <span id="cb5-189"><a href="#cb5-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-190"><a href="#cb5-190" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{ (n+1)(2n(2n+1) - 3n(n+1))  - 6\sum_{i=1}^n d_i^2}{n(n^2-1)}<span class="sc">\\</span></span>
-<span id="cb5-191"><a href="#cb5-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-192"><a href="#cb5-192" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{ (n+1)(n^2-n)  - 6\sum_{i=1}^n d_i^2}{n(n^2-1)}<span class="sc">\\</span></span>
-<span id="cb5-193"><a href="#cb5-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-194"><a href="#cb5-194" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{ (n+1)(n-1)n  - 6\sum_{i=1}^n d_i^2}{n(n^2-1)}<span class="sc">\\</span></span>
-<span id="cb5-195"><a href="#cb5-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-196"><a href="#cb5-196" aria-hidden="true" tabindex="-1"></a>&amp; = \frac{ (n^2-1)n  - 6\sum_{i=1}^n d_i^2}{n(n^2-1)}<span class="sc">\\</span></span>
-<span id="cb5-197"><a href="#cb5-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-198"><a href="#cb5-198" aria-hidden="true" tabindex="-1"></a>&amp; = 1 - \frac{6\sum_{i=1}^n d_i^2}{n(n^2-1)}<span class="sc">\\</span></span>
-<span id="cb5-199"><a href="#cb5-199" aria-hidden="true" tabindex="-1"></a>\end{align*}</span>
-<span id="cb5-200"><a href="#cb5-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-201"><a href="#cb5-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-202"><a href="#cb5-202" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conclusion</span></span>
-<span id="cb5-203"><a href="#cb5-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-204"><a href="#cb5-204" aria-hidden="true" tabindex="-1"></a>Nous avons pu définir et illustrer de manière concrète le lien entre les deux coefficients étudiés, en mettant en évidence leur complémentarité dans l’analyse statistique. Cette démarche nous a également permis de nous entraîner à la manipulation mathématique de ces coefficients, en comprenant non seulement leur interprétation, mais aussi les relations algébriques qui les unissent.</span>
-<span id="cb5-205"><a href="#cb5-205" aria-hidden="true" tabindex="-1"></a>Au-delà de l’aspect purement technique, cet exercice contribue à une meilleure compréhension des outils statistiques et de leur utilité dans l’analyse de données, en posant les bases nécessaires à une utilisation rigoureuse et critique dans des contextes réels.</span>
-<span id="cb5-206"><a href="#cb5-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-207"><a href="#cb5-207" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session info</span></span>
-<span id="cb5-208"><a href="#cb5-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-211"><a href="#cb5-211" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-212"><a href="#cb5-212" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">pkgs =</span> <span class="st">"attached"</span>)</span>
-<span id="cb5-213"><a href="#cb5-213" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-190"><a href="#cb5-190" aria-hidden="true" tabindex="-1"></a>Nous avons pu définir et illustrer de manière concrète le lien entre les deux coefficients étudiés, en mettant en évidence leur complémentarité dans l’analyse statistique. Cette démarche nous a également permis de nous entraîner à la manipulation mathématique de ces coefficients, en comprenant non seulement leur interprétation, mais aussi les relations algébriques qui les unissent.</span>
+<span id="cb5-191"><a href="#cb5-191" aria-hidden="true" tabindex="-1"></a>Au-delà de l’aspect purement technique, cet exercice contribue à une meilleure compréhension des outils statistiques et de leur utilité dans l’analyse de données, en posant les bases nécessaires à une utilisation rigoureuse et critique dans des contextes réels.</span>
+<span id="cb5-192"><a href="#cb5-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-193"><a href="#cb5-193" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session info</span></span>
+<span id="cb5-194"><a href="#cb5-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-197"><a href="#cb5-197" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-198"><a href="#cb5-198" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">pkgs =</span> <span class="st">"attached"</span>)</span>
+<span id="cb5-199"><a href="#cb5-199" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -31,22 +31,10 @@ description: "Présentation des coefficients de Bravais-Pearson et Spearman et l
 
 -   
 
-# Setup
-
-:::: panel-tabset
-## Packages
-
-```{r, setup, warning=FALSE, message=FALSE}
+```{r, setup, warning=FALSE, message=FALSE, include=FALSE}
 library(dplyr)        # manipulation des données
 ```
 
-## Seed
-
-```{r}
-set.seed(140400)
-```
-
-::::
 
 # Exercice
 

@@ -1,0 +1,111 @@
+---
+title: "Exercice 2.03"
+author: "Clément Poupelin"
+date: "2025-04-13"
+date-modified: "`r Sys.Date()`"
+format: 
+  html:
+    embed-resources: false
+    toc: true
+    code-fold: true
+    code-summary: "Show the code"
+    code-tools: true
+    toc-location: right
+    page-layout: article
+    code-overflow: wrap
+toc: true
+number-sections: false
+editor: visual
+categories: ["Feuille 2", "Régresseurs aléatoires"]
+image: "/img/analyse-de-regression.png"
+description: "Description"
+---
+
+# Intervenant.e.s
+
+### Rédaction
+
+-   **Clément Poupelin**, [clementjc.poupelin\@gmail.com](mailto:clementjc.poupelin@gmail.com){.email}\
+
+### Relecture
+
+-   
+
+
+```{r, setup, warning=FALSE, message=FALSE, include=FALSE}
+library(dplyr)        # manipulation des données
+```
+
+
+# Exercice
+
+On considère le modèle suivant : 
+
+$$Y_i = \beta_0 + \beta_1X_i + \varepsilon_i$$
+
+Où les variables $\varepsilon_i$ sont i.i.d, centrées, de variance $\sigma^2$ et où les régresseurs $X_i$ sont supposés i.i.d. de carré intégrable. On note $\mathcal{E} = (\varepsilon_1, . . . , \varepsilon_n)'$, $\beta = (\beta_0, \beta_1)'$ et $\hat{\beta}$ l’estimateur de $\beta$ par MCO. On suppose que les vecteurs aléatoires $X$ et $\mathcal{E}$ sont indépendants.
+
+On peut commencer par exprimer $\hat{\beta} - \beta$ en fonction des vecteurs $X$ et $\varepsilon$. En effet, 
+
+
+\begin{align*}
+
+\hat{\beta} - \beta &= (X'X)^{-1}X'Y - \beta \\
+
+&= (X'X)^{-1} X'X\beta + (X'X)^{-1}X'\mathcal{E} - \beta \\
+
+&= (X'X)^{-1}X'\mathcal{E} \\
+
+\end{align*}
+
+
+Ainsi, on peut en déduire que $\hat{\beta}$ converge presque sûrement vers $\beta$ lorsque $n \longrightarrow \infty$. 
+
+On a $(X'X) = \begin{pmatrix}
+  n & \sum_{i=1}^n X_i\\ 
+  \sum_{i=1}^n X_i & \sum_{i=1}^n X_i^2
+\end{pmatrix} \Leftrightarrow \frac{1}{n}(X'X) = \begin{pmatrix}
+  1 & \bar{X}\\ 
+  \bar{X} & \frac{1}{n} \sum_{i=1}^n X_i^2
+\end{pmatrix}$
+
+Par la Loi forte des grands nombre (LFGN), $\frac{1}{n} (X'X) \overset{p.s}{\longrightarrow} M$
+
+Où $M = \begin{pmatrix}
+  1 & \mathbb{E}(X)\\ 
+  \mathbb{E}(X) & \mathbb{E}(X^2)
+\end{pmatrix} \text{ et } \text{det}(M) = \text{Var}(X)$
+
+Et donc $n(X'X)^{-1} \overset{p.s}{\longrightarrow} M^{-1}$.
+
+De plus, par la LFGN $\frac{1}{n} X'\mathcal{E} = \begin{pmatrix}
+  \frac{1}{n} \sum_{i=1}^n \varepsilon_i \\ 
+  \frac{1}{n} \sum_{i=1}^n X_i\varepsilon_i 
+\end{pmatrix} \overset{p.s}{\longrightarrow} \begin{pmatrix}
+  \frac{1}{n} \sum_{i=1}^n \mathbb{E}(\varepsilon_i) \\ 
+  \frac{1}{n} \sum_{i=1}^n \underbrace{\mathbb{E}(X_i) \mathbb{E}(\varepsilon_i) }_{X_i \text{ indépendant de } \varepsilon_i}
+\end{pmatrix} =\begin{pmatrix}
+  0 \\ 
+  0
+\end{pmatrix}$
+
+
+Donc $n(X'X)^{-1} X'\mathcal{E}\frac{1}{n} \overset{p.s}{\longrightarrow} M \begin{pmatrix}
+  0 \\ 
+  0
+\end{pmatrix} = \begin{pmatrix}
+  0 \\ 
+  0
+\end{pmatrix}$ 
+
+
+
+Donc $\hat{\beta} - \beta \overset{p.s}{\longrightarrow} 0 \Leftrightarrow \hat{\beta} \overset{p.s}{\longrightarrow} \beta$
+
+# Conclusion
+
+# Session info
+
+```{r}
+sessioninfo::session_info(pkgs = "attached")
+```
