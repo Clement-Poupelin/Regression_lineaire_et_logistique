@@ -31,6 +31,23 @@ description: "Présentation des coefficients de Bravais-Pearson et Spearman et l
 
 -   
 
+# Setup
+
+:::: panel-tabset
+## Packages
+
+```{r, setup, warning=FALSE, message=FALSE}
+library(dplyr)        # manipulation des données
+```
+
+## Seed
+
+```{r}
+set.seed(140400)
+```
+
+::::
+
 # Exercice
 
 Cette exercice à pour but de présenter un peu les coefficients de corrélation de **Bravais-Pearson** et **Spearman**.\
@@ -184,3 +201,9 @@ Ce qui peut nous permettre de déduire la valeur de $\rho$ en fonction de l'éch
 
 Nous avons pu définir et illustrer de manière concrète le lien entre les deux coefficients étudiés, en mettant en évidence leur complémentarité dans l’analyse statistique. Cette démarche nous a également permis de nous entraîner à la manipulation mathématique de ces coefficients, en comprenant non seulement leur interprétation, mais aussi les relations algébriques qui les unissent.
 Au-delà de l’aspect purement technique, cet exercice contribue à une meilleure compréhension des outils statistiques et de leur utilité dans l’analyse de données, en posant les bases nécessaires à une utilisation rigoureuse et critique dans des contextes réels.
+
+# Session info
+
+```{r}
+sessioninfo::session_info(pkgs = "attached")
+```

@@ -1,0 +1,227 @@
+---
+title: "Exercice 2.02"
+author: "Clément Poupelin"
+date: "2025-04-11"
+date-modified: "`r Sys.Date()`"
+format: 
+  html:
+    embed-resources: false
+    toc: true
+    code-fold: true
+    code-summary: "Show the code"
+    code-tools: true
+    toc-location: right
+    page-layout: article
+    code-overflow: wrap
+toc: true
+number-sections: false
+editor: visual
+categories: ["Feuille 2", "Régression orthogonale"]
+image: "/img/analyse-de-regression.png"
+description: "Présentation de la regression orthogonale"
+---
+
+# Intervenant.e.s
+
+### Rédaction
+
+-   **Clément Poupelin**, [clementjc.poupelin\@gmail.com](mailto:clementjc.poupelin@gmail.com){.email}\
+
+### Relecture
+
+-   
+
+# Setup
+
+:::: panel-tabset
+## Packages
+
+```{r, setup, warning=FALSE, message=FALSE}
+library(dplyr)        # manipulation des données
+```
+
+## Fonctions
+
+::: panel-tabset
+
+### Coefficients MCO
+
+
+```{r}
+beta1_MCO <- function(x, y) {
+  sum((x - mean(x)) * (y - mean(y))) / sum((x - mean(x))^2)
+}
+
+beta0_MCO <- function(x, y) {
+  mean(y) - beta1_MCO(x, y) * mean(x)
+}
+```
+
+### Coefficients RI
+
+```{r}
+beta1_RI <- function(x, y) {
+  sum((y - mean(y))^2) / sum((x - mean(x)) * (y - mean(y)))
+}
+
+beta0_RI <- function(x, y) {
+  mean(y) - beta1_RI(x, y) * mean(x)
+}
+```
+
+
+### Coefficients RO
+
+```{r}
+beta1_RO <- function(x, y) {
+  delta <- (sum((y - mean(y))^2) - sum((x - mean(x))^2))^2 + 4*sum((x - mean(x)) * (y - mean(y)))^2
+  ((sum((y - mean(y))^2) - sum((x - mean(x))^2)) + sign(sum((x - mean(x)) * (y - mean(y)))) * sqrt(delta))/ ( 2 * sum((x - mean(x)) * (y - mean(y))) )
+}
+
+beta0_RO <- function(x, y) {
+  mean(y) - beta1_RO(x, y) * mean(x)
+}
+```
+
+:::
+
+## Seed
+
+```{r}
+set.seed(140400)
+```
+
+::::
+
+# Exercice
+
+
+On admet que le problème de minimisation associé à la régression orthogonale revient à minimise :
+
+$$S = \sum_{i=1}^{n}\frac{(Y_i - \beta_0 - \beta_1X_i)^2}{1 + \beta_1^2}$$
+
+On note $\hat{\beta}_{0\text{RO}}$ , $\hat{\beta}_{1\text{RO}}$ les paramètres du modèle de régression vérifiant ce problème de minimisation.\
+
+Tout d'abord, vérifions que $S_{XY} - \beta_1S_{XX} = \sum_{i=1}^n X_i\left[ (Y_i - \bar{Y}) - \beta_1(X_i - \bar{X})\right]$
+
+\begin{align*}
+S_{XY} - \beta_1S_{XX} & = \sum_{i=1}^n(X_i - \bar{X})(Y_i - \bar{Y}) - \beta_1 \sum_{i=1}^n(X_i - \bar{X})^2 \\
+
+& = \sum_{i=1}^n \left( (X_i - \bar{X}) \left[ (Y_i - \bar{Y}) - \beta_1(X_i - \bar{X}) \right] \right) \\
+
+& = \underbrace{\sum_{i=1}^n X_i\left[ (Y_i - \bar{Y}) - \beta_1(X_i - \bar{X}) \right]}_{\text{OK}} - \underbrace{\bar{X} \sum_{i=1}^n \left[ (Y_i - \bar{Y}) - \beta_1(X_i - \bar{X}) \right]}_{\text{=0?}}
+
+\end{align*}
+
+On retrouve l'expression voulue. Vérifions l'autre égalité : 
+
+
+\begin{align*}
+\bar{X} \sum_{i=1}^n \left[ (Y_i - \bar{Y}) - \beta_1(X_i - \bar{X}) \right] & = \bar{X} \sum_{i=1}^n \left[ Y_i - \beta_1X_i - \bar{Y} + \beta_1\bar{X} \right] \\
+
+& = \bar{X} \sum_{i=1}^n \left[ \beta_0 + \beta_1X_i + \varepsilon_i - \beta_1X_i - \bar{Y} + \beta_1\bar{X} \right] \\
+
+
+& = \bar{X} \left[ \sum_{i=1}^n  (\beta_0 + \varepsilon_i) - n\bar{Y} + n\beta_1\bar{X} \right] \\
+
+
+& = n\bar{X}\beta_0 + \bar{X}\underbrace{\sum_{i=1}^n \varepsilon_i}_{=0 \text{ car } \varepsilon_i \text{ centrés}} - n\bar{X}\bar{Y} + n\beta_1\bar{X}^2 \\
+
+
+& = n\bar{X}\beta_0 - n\bar{X}\left( \frac{1}{n}\sum_{i=1}^n \left( \beta_0 + \beta_1X_i + \varepsilon_i \right) \right) + n\beta_1\bar{X}^2 \\
+
+
+& = n\bar{X}\beta_0 - n\bar{X}\beta_0 - n\beta_1\bar{X}^2 - \bar{X}\underbrace{\sum_{i=1}^n \varepsilon_i}_{=0} + n\beta_1\bar{X}^2 \\
+
+& = 0
+
+
+\end{align*}
+
+
+Maintenant, calculons les dérivées partielles $\frac{\partial S}{\partial \beta_0}$ $\frac{\partial S}{\partial \beta_1}$
+
+::: panel-tabset
+
+## $\frac{\partial S}{\partial \beta_0}$
+
+\begin{align*}
+
+\frac{\partial S}{\hat{\beta}_0} & = \frac{\partial}{\hat{\beta}_0} \left[\frac{1}{1+\beta_1^2} \sum_{i=1}^n \left( Y_i - \beta_0 - \beta_1X_i \right)^2 \right]\\
+
+& = \frac{\partial}{\hat{\beta}_0} \left[\frac{1}{1+\beta_1^2} \sum_{i=1}^n \left( \beta_0^2 + (Y_i - \beta_1X_i)^2 2\beta_0(Y_i - \beta_1X_i) \right) \right]\\
+
+&= \frac{2n\beta_0}{1+\beta_1^2} + \frac{2 \sum_{i=1}^n (Y_i - \beta_1X_i)}{1+\beta_1^2} \\
+
+&= \frac{-2}{1+\beta_1^2}\sum_{i=1}^n (Y_i - \beta_0 - \beta_1X_i)
+\end{align*}
+
+## $\frac{\partial S}{\partial \beta_1}$
+
+\begin{align*}
+
+\frac{\partial S}{\hat{\beta}_1} & = \frac{1}{(1 + \beta_1^2)^2} \left[ -2\beta_1  \sum_{i=1}^n (Y_i - \beta_0 - \beta_1X_i)^2 - (1 + \beta_1^2)2\sum_{i=1}^n (X_i(Y_i - \beta_0 - \beta_1X_i)) \right] \\
+
+
+\end{align*}
+
+:::
+
+
+Ensuite, soit $\hat{\beta}_{0\text{RO}}$ le point critique.
+
+\begin{align*}
+
+\frac{\partial S}{\hat{\beta}_{0\text{RO}}} = 0 & \Leftrightarrow  0 = \sum_{i=1}^n (Y_i - \hat{\beta}_{0\text{RO}} - \hat{\beta}_{1\text{RO}}X_i) \\
+
+
+& \Leftrightarrow \hat{\beta}_{0\text{RO}} = \frac{1}{n}\sum_{i=1}^n Y_i - \frac{1}{n}\sum_{i=1}^n X_i \hat{\beta}_{1\text{RO}} \\
+
+
+& \Leftrightarrow \hat{\beta}_{0\text{RO}} = \bar{Y} - \hat{\beta}_{1\text{RO}} \bar{X} \\
+
+\end{align*}
+
+
+On retrouve le même estimateur que pour une régression des moindres carrés ou une régression inverse. On peut donc dire que l'on passe également par le point moyen du nuage de point.
+
+
+Maintenant, cherchons l'expression de $\hat{\beta}_{1\text{RO}}$
+
+\begin{align*}
+
+\frac{\partial S}{\hat{\beta}_{1\text{RO}}} = 0 & \Leftrightarrow  0 = - \hat{\beta}_{1\text{RO}}^2 S_{XY} + \hat{\beta}_{1\text{RO}}(S_{YY} - S_{XX}) + S_{XY} \\
+
+\end{align*}
+
+
+On reconnait un polynome du second degré avec $\Delta = (S_{YY} - S_{XX})^2 + 4S_{XY}^2 \geq 0$\
+
+Ainsi, 
+$$\hat{\beta}_{1\text{RO}} = \frac{-S_{YY} + S_{XX} \pm \sqrt{\Delta}}{-2S_{XY}} = \frac{(S_{YY} - S_{XX}) + sign(S_{XY}) \sqrt{\Delta}}{2S_{XY}}$$
+
+
+
+Maintenant, nous allons ajuster la régression orthogonale en reprenant le schéma de simulation de l'[exercice 4 Partie 1](../posts/Exercice_01.04.qmd)
+
+
+
+
+
+
+# Conclusion
+
+# Session info
+
+```{r}
+sessioninfo::session_info(pkgs = "attached")
+```
+
+
+
+
+
+
+
+
+

@@ -31,6 +31,24 @@ description: "Régression simple par moindres carrés ordinaires"
 
 -   
 
+
+# Setup
+
+:::: panel-tabset
+## Packages
+
+```{r, setup, warning=FALSE, message=FALSE}
+library(dplyr)        # manipulation des données
+```
+
+## Seed
+
+```{r}
+set.seed(140400)
+```
+
+::::
+
 # Exercice
 
 On souhaite exprimer la hauteur $y$ d’un arbre en fonction de son diamètre $x$ à 1m30 du sol. Pour cela,
@@ -89,3 +107,8 @@ Dans cet exercice, nous avons pu nous entraîner à la mise en œuvre d’un **m
 
 Toutefois, il est important de garder à l’esprit que $r$ ne suffit pas à lui seul pour évaluer la qualité d’un modèle, l’analyse des résidus et d'autres indicateurs (comme $R^2$, l’erreur quadratique, ...) sont également nécessaires pour une évaluation complète.
 
+# Session info
+
+```{r}
+sessioninfo::session_info(pkgs = "attached")
+```

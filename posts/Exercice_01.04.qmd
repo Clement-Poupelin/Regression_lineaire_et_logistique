@@ -99,7 +99,34 @@ On considère deux échantillons de $n$ variables $(X_1, . . . , X_n)$ et $(Y_1,
 $$Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i$$
 où les $\varepsilon_i$ sont i.i.d de moyenne nulle, non corrélées et de variance $\sigma^2$ .
 
-On va se baser sur des données présentes dans le fichier X.txt (mettre lien vers le github /Data). Le but sera de calculer les estimateurs précédents sur $B=100$ échantiloons de $(Y_i)_i$ définis par $Y_i = 10 + 2X_i + \varepsilon_i$, les $\varepsilon_i$ sont gaussiennes i.i.d de moyenne nulle, non corrélées et de variance $\sigma^2=1$.
+
+On va rappeler que les coeffictients MCO sont de la forme : 
+
+  - $\hat{\beta}_{1\text{MCO}} = \frac{\sum_{i=1}^n(X_i - \bar{X})(Y_i - \bar{Y})}{\sum_{i=1}^{n}(X_i - \bar{X})^2} = \frac{S_{XY}}{S_{XX}}$
+
+  - $\hat{\beta}_{0\text{MCO}} = \bar{Y} + \hat{\beta}_{1\text{MCO}}\bar{X}$
+
+
+Maintenant, on veut récupérer la formule des coefficients de régression inverse. Pour cela, on part d'une transformation du modèle linéaire précédent : 
+
+$$X_i = \frac{-\beta_0}{\beta_1} + \frac{1}{\beta_1}Y_i + \varepsilon_i'$$
+
+Ce qui nous donne les coeffficients $\alpha_0 = \frac{-\beta_0}{\beta_1}$ et $\alpha_1 = \frac{1}{\beta_1}$. Et si on procède à une estimation MCO sur ces coefficients, on obtient : 
+
+  - $\hat{\alpha}_{1\text{MCO}} = \frac{S_{XY}}{S_{YY}}$
+
+  - $\hat{\alpha}_{0\text{MCO}} = \bar{X} + \hat{\alpha}_{1\text{MCO}}\bar{Y}$
+
+Or, on a aussi $\hat{\alpha}_0 = \frac{-\hat{\beta}_0}{\hat{\beta}_1}$ et $\hat{\alpha}_1 = \frac{1}{\hat{\beta}_1}$.
+
+Ce qui nous permet donc d'arriver aux estimateurs de régression inverse 
+
+  - $\hat{\beta}_{1\text{RI}} = \frac{S_{YY}}{S_{XY}}$
+
+  - $\hat{\beta}_{0\text{RI}} = \bar{Y} + \hat{\beta}_{1\text{MCO}}\bar{X}$
+
+
+Maintenant qu'on a ces formule, on va se baser sur des données présentes dans le fichier [X.txt](https://github.com/Clement-Poupelin/Regression_lineaire_et_logistique/tree/main/Data) et le but sera de calculer les estimateurs précédents sur $B=100$ échantiloons de $(Y_i)_i$ définis par $Y_i = 10 + 2X_i + \varepsilon_i$, les $\varepsilon_i$ sont gaussiennes i.i.d de moyenne nulle, non corrélées et de variance $\sigma^2=1$.
 
 ```{r}
 X_data <- readr::read_csv("../Data/X.txt")
@@ -426,7 +453,7 @@ METTRE LES CONCLUSIONS
 # sessioninfo::session_info(pkgs = "attached")
 ```
 
-```{r, include=FALSE, eval=FALSE}
+```{r, error=TRUE}
 
 
 ######################### Exercice 4 ###########################################
@@ -461,7 +488,7 @@ beta0RI = function( x, y ){
 
 library(readr)
 data <- readr::read_csv("../Data/X.txt")
-View(data)
+# View(data)
 
 beta1 = 2
 beta0 = 10
